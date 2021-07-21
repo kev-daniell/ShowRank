@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Posts</title>
+
+    <link rel="stylesheet" href="/main.css">
+
+</head>
+
+<body class="<%=viewMode%>">
+    <h1><a href="/">Home</a></h1>
+    <h1>Posts on ShowApp: </h1>
+    <br>
+    <button><a href="/posts/create">+ Create a Post</a></button>
+    <hr>
+    <% for(let i=0; i < posts.length; i++){%>
+        <div>
+            <p>
+                User: <a href="##">
+                    <%= posts[length - i].author %>
+                </a>
+            </p>
+            <h3>
+                <a href="/posts/<%= posts[length - i]._id %>">
+                    <%= posts[length - i].title%>
+                </a>
+            </h3>
+            <p>
+                <%= posts[length - i].text %>
+            </p>
+            <% if(posts[length - i].author==="k6daniel" ){ %>
+                <a href="/posts/<%= posts[length - i]._id %>/edit">Edit</a>
+                <% } %>
+                    <br>
+                    <a href="#">Comments: 0 </a>
+                    <hr>
+        </div>
+        <% } %>
+</body>
+
+</html>
