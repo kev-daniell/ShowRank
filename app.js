@@ -40,7 +40,7 @@ app.get('/posts/create', (req, res) => {
 })
 
 app.get('/posts', async (req, res) => {
-    const posts = await Post.find({})
+    const posts = await Post.find()
     const length = posts.length - 1
     res.render('posts', { posts, viewMode, length })
 })
