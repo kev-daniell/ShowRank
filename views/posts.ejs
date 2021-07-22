@@ -1,25 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=, initial-scale=1.0">
-    <title>Posts</title>
-
-    <link rel="stylesheet" href="/main.css">
-
-</head>
-
-<body class="<%=viewMode%>">
-    <h1><a href="/">Home</a></h1>
+<% layout('layout/boilerplate') %>
     <h1>Posts on ShowApp: </h1>
     <br>
-    <button><a href="/posts/create">+ Create a Post</a></button>
+    <a href="/posts/create" class="btn btn-outline-secondary">+ Create a Post</a>
     <hr>
     <% for(let i=0; i < posts.length; i++){%>
+
+
+        <!-- <div class="card <%= viewMode ==='light' ? " text-dark bg-light mb-3" : "text-white bg-dark mb-3" %>">
+            <div class="card-body">
+                <p class="card-text">
+                    <%= posts[length - i].author %>
+                </p>
+                <h5 class="card-title">
+                    <%= posts[length - i].title%>
+                </h5>
+                <img src="https://i.pinimg.com/736x/e6/be/ce/e6becefae197e7bf2b1afcae751b22b6.jpg" class="card-img-top"
+                    alt="pic">
+
+                <p class="card-text">
+                    <%= posts[length - i].text %>
+                </p>
+                <a href="/posts/<%= posts[length - i]._id %>" class="btn <%= viewMode ==='light' ? " btn-secondary"
+                    : "btn-light" %>">View Post</a>
+            </div>
+        </div> -->
+
+        <!-- ------------------------------------------------------------------- -->
+
+
         <div>
-            <p>
+            <div class="list-group">
+                <a href="/posts/<%= posts[length - i]._id %>"
+                    class="list-group-item list-group-item-action <%= viewMode ==='light' ? " list-group-item-light"
+                    : "list-group-item-dark" %>">
+                    <p class="card-text">
+                        <%= posts[length - i].author%>
+                    </p>
+                    <div class="d-flex w-100 justify-content-between">
+
+                        <h5 class="mb-1">
+                            <%= posts[length - i].title%>
+                        </h5>
+                        <small class="text-muted">TIME - work in progress</small>
+                    </div>
+                    <img src="https://i.pinimg.com/originals/ab/ec/81/abec815d3c9ac54ee7b6e6b8a36a81f6.png"
+                        class="card-img-top" alt="pic">
+                    <p class="mb-1">
+                        <%= posts[length - i].text %>
+                    </p>
+                    <br>
+                    <section>
+                        <small class="text-muted">Comments: 0</small>
+                    </section>
+
+                </a>
+            </div>
+
+            <!-- ------------------------------------------------------------------- -->
+
+            <!-- <p>
                 User: <a href="##">
                     <%= posts[length - i].author %>
                 </a>
@@ -37,9 +76,6 @@
                 <% } %>
                     <br>
                     <a href="#">Comments: 0 </a>
-                    <hr>
+                    <hr> -->
         </div>
         <% } %>
-</body>
-
-</html>

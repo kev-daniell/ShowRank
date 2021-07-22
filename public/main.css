@@ -6,5 +6,10 @@
 
 .light{
     background-color: white;
-    color: black;
+    color: grey;
+}
+
+.list-group-item-dark{
+    background-color: rgb(26, 25, 25);
+    color:white
 }

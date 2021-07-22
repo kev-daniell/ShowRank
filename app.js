@@ -4,6 +4,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const Post = require('./models/posts')
 const methodOverride = require('method-override')
+const ejsMate = require('ejs-mate')
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -11,6 +12,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
+app.engine('ejs', ejsMate);
 
 mongoose.connect('mongodb://localhost:27017/showApp', { useNewUrlParser: true, useUnifiedTopology: true, })
     .then(() => {
@@ -21,7 +23,7 @@ mongoose.connect('mongodb://localhost:27017/showApp', { useNewUrlParser: true, u
     })
 
 
-let viewMode = "dark";
+let viewMode = "light";
 const author = "k6daniel";
 
 app.get('/', (req, res) => {

@@ -13,7 +13,7 @@ const postSchema = new Schema({
     postID: String,
     text: {
         type: String
-    }
+    },
 })
 
 const Post = mongoose.model('Post', postSchema);
