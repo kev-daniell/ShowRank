@@ -1,6 +1,33 @@
 <% layout('layout/boilerplate') %>
 
-    <div>
+    <div class="mt-3 card <%= viewMode ==='light' ? " text-dark bg-light mb-3" : "text-white bg-dark mb-3" %>">
+        <div class="card-body">
+            <p class="card-text">
+                User: <a href="##">
+                    <%= post.author %>
+                </a>
+            </p>
+            <h4 class="card-title">
+                <%= post.title %>
+            </h4>
+            <img class="card-img-top" src="https://i.pinimg.com/originals/84/58/61/84586164248f9862b4117b2c2ab540aa.jpg"
+                alt="pic">
+
+            <p class="card-text">
+                <%= post.text %>
+            </p>
+            <a href="/posts" class="btn btn-outline-secondary">Back to All
+                Posts</a>
+            <% if(post.author==="k6daniel" ){ %>
+                <a class="btn btn-outline-secondary" href="/posts/<%= post._id %>/edit">Edit</a>
+                <% } %>
+        </div>
+    </div>
+
+
+
+
+    <!-- <div>
         <p>
             User: <a href="##">
                 <%= post.author %>
@@ -19,4 +46,4 @@
             <% } %>
                 <hr>
     </div>
-    <button><a href="/posts">Back to All Posts</a></button>
+    <button><a href="/posts">Back to All Posts</a></button> -->

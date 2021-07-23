@@ -13,12 +13,12 @@
         <section>
             <textarea name="text" id="text" cols="100" rows="10"><%= post.text %> </textarea>
         </section>
-        <button>Update</button>
+        <button class="btn btn-outline-secondary">Update</button>
     </form>
     <br>
     <form action="/posts/<%= post._id %>?_method=DELETE" method="POST">
-        <button>Delete Post</button>
+        <button class="btn btn-outline-secondary">Delete Post</button>
     </form>
     <br>
-    <button><a href="/posts/<%= post._id %>">Back to Original Post</a></button>
-    <button><a href="/posts">Back to All Posts</a></button>
+    <a class="btn btn-outline-secondary" href="/posts/<%= post._id %>">Back to Original Post</a>
+    <a class="btn btn-outline-secondary" href="/posts">Back to All Posts</a>

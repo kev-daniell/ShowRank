@@ -23,7 +23,7 @@ mongoose.connect('mongodb://localhost:27017/showApp', { useNewUrlParser: true, u
     })
 
 
-let viewMode = "light";
+let viewMode = "dark";
 const author = "k6daniel";
 
 app.get('/', (req, res) => {

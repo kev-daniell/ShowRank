@@ -13,3 +13,14 @@
     background-color: rgb(26, 25, 25);
     color:white
 }
+
+.darkLG :hover{
+    background-color: rgb(39, 38, 38);
+    color:white;
+}
+
+.lightLG :hover{
+    background-color: rgb(235, 231, 231);
+    color:grey;
+}
+
