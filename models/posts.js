@@ -10,8 +10,10 @@ const postSchema = new Schema({
         type: String,
         required: true
     },
-    postID: String,
     text: {
+        type: String
+    },
+    image: {
         type: String
     },
 })

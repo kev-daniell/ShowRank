@@ -62,16 +62,16 @@ app.get('/posts/:id/edit', async (req, res) => {
 })
 
 app.post('/posts', async (req, res) => {
-    const { title, text } = req.body
-    const newPost = new Post({ author, title, text })
+    const { title, text, image } = req.body
+    const newPost = new Post({ author, title, text, image })
     await newPost.save()
     res.redirect('/posts')
 })
 
 app.patch('/posts/:id', async (req, res) => {
     const { id } = req.params;
-    const { title, text } = req.body;
-    const currentPost = await Post.findByIdAndUpdate(id, { title: title, text: text }, { runValidators: true, useFindAndModify: false })
+    const { title, text, image } = req.body;
+    const currentPost = await Post.findByIdAndUpdate(id, { title: title, text: text, image: image }, { runValidators: true, useFindAndModify: false })
     await currentPost.save()
     res.redirect('/posts')
 })

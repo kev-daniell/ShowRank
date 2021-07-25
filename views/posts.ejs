@@ -20,15 +20,16 @@
                         </h5>
                         <small class="text-muted">5 days ago</small>
                     </div>
-                    <img src="https://i.pinimg.com/originals/84/58/61/84586164248f9862b4117b2c2ab540aa.jpg"
-                        class="card-img-top" alt="pic">
-                    <p class="mb-1">
-                        <%= posts[length - i].text %>
-                    </p>
-                    <br>
-                    <section>
-                        <small class="text-muted">Comments: 0</small>
-                    </section>
+                    <% if(posts[length - i].image){ %>
+                        <img src="<%= posts[length - i].image %>" class="card-img-top" alt="post pic">
+                        <% } %>
+                            <p class="mb-1">
+                                <%= posts[length - i].text %>
+                            </p>
+                            <br>
+                            <section>
+                                <small class="text-muted">Comments: 0</small>
+                            </section>
                 </a>
             </div>
         </div>

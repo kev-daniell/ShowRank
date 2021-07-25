@@ -5,14 +5,17 @@
     <form action="/posts/<%=post._id%>?_method=PATCH" method="POST">
         <p>User: <%= post.author %>
         </p>
-        <label for="title">Title:</label>
-        <input value="<%= post.title %>" type="text" name="title" id="title" placeholder="title">
+        <label class="form-label" for="title">Title:</label>
+        <input class="form-control" value="<%= post.title %>" type="text" name="title" id="title" placeholder="title">
 
         <br>
-        <label for="text">Post Content:</label>
+        <label class="form-label" for="text">Post Content:</label>
         <section>
-            <textarea name="text" id="text" cols="100" rows="10"><%= post.text %> </textarea>
+            <textarea class="form-control" name="text" id="text" cols="100" rows="10"><%= post.text %> </textarea>
         </section>
+        <label class="form-label mt-3" for="inputGroupFile03">Image Upload: </label>
+        <input class="form-control" type="text" name="image" id="image" value="<%= post.image %>"
+            placeholder="Insert image adress"> <br>
         <button class="btn btn-outline-secondary">Update</button>
     </form>
     <br>
