@@ -2,11 +2,17 @@
 
     <h1>Edit Your Post</h1>
     <br>
-    <form action="/posts/<%=post._id%>?_method=PATCH" method="POST">
+    <form class="needs-validation" action="/posts/<%=post._id%>?_method=PATCH" method="POST" novalidate>
         <p>User: <%= post.author %>
         </p>
-        <label class="form-label" for="title">Title:</label>
-        <input class="form-control" value="<%= post.title %>" type="text" name="title" id="title" placeholder="title">
+        <div>
+            <label class="form-label" for="title">Title:</label>
+            <input class="form-control" value="<%= post.title %>" type="text" name="title" id="title"
+                placeholder="title" required>
+            <div class="invalid-feedback">
+                You cannot have the title empty
+            </div>
+        </div>
 
         <br>
         <label class="form-label" for="text">Post Content:</label>
@@ -25,3 +31,27 @@
     <br>
     <a class="btn btn-outline-secondary" href="/posts/<%= post._id %>">Back to Original Post</a>
     <a class="btn btn-outline-secondary" href="/posts">Back to All Posts</a>
+
+    <script>
+        (function () {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            const forms = document.querySelectorAll('.needs-validation')
+
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+
+
+    </script>

@@ -82,6 +82,10 @@ app.delete('/posts/:id', async (req, res) => {
     res.redirect('/posts')
 })
 
+// app.use((err, req, res, next) => {
+
+// })
+
 app.listen(3000, () => {
     console.log('Serving on port 3000')
 })
