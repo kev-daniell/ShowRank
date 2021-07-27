@@ -40,7 +40,7 @@ const validatePost = (req, res, next) => {
     else next()
 }
 
-
+//Routing to home page
 app.get('/', (req, res) => {
     res.render('home', { viewMode })
 })
