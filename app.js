@@ -16,6 +16,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 app.engine('ejs', ejsMate);
+const lel;
 
 mongoose.connect('mongodb://localhost:27017/showApp', { useNewUrlParser: true, useUnifiedTopology: true, })
     .then(() => {
