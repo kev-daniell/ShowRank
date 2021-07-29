@@ -41,7 +41,6 @@ const validatePost = (req, res, next) => {
     }
     else next()
 }
-
 //Routing to home page
 app.get('/', (req, res) => {
     res.render('home', { viewMode })
@@ -54,18 +53,20 @@ app.get('/change', (req, res) => {
     res.redirect('/')
 })
 
+
 //All the commenting routes
 
-app.post('/posts/:id/comment', async (req, res) => {
+app.post('/posts/:id/comment', catchAsync(async (req, res) => {
     const { text } = req.body;
     const { id } = req.params;
-    // const newComment = new Comment({ author: author, text: text, post: id })
-    // const currentPost = await Post.findById(id);
-    // currentPost.comments.push(newComment);
-    // await newComment.save()
-    // await currentPost.save()
+    const newComment = new Comment({ author: author, text: text })
+    const currentPost = await Post.findById(id);
+    currentPost.comments.push(newComment);
+    newComment.post = currentPost;
+    await newComment.save()
+    await currentPost.save()
     res.redirect(`/posts/${id}`)
-})
+}))
 
 
 
@@ -75,7 +76,7 @@ app.get('/posts/create', (req, res) => {
 })
 
 app.get('/posts', catchAsync(async (req, res) => {
-    const posts = await Post.find()
+    const posts = await Post.find().populate('comments')
     const length = posts.length - 1
     res.render('posts', { posts, viewMode, length })
 }))
@@ -83,7 +84,7 @@ app.get('/posts', catchAsync(async (req, res) => {
 
 app.get('/posts/:id', catchAsync(async (req, res, next) => {
     const { id } = req.params;
-    const currentPost = await Post.findById(id)
+    const currentPost = await Post.findById(id).populate('comments')
     res.render('show', { viewMode, post: currentPost })
 }))
 

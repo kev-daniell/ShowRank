@@ -28,8 +28,23 @@
     </div>
 
     <form action="/posts/<%=post._id%>/comment" method="POST">
-        <label for="text">Make a Comment: </label>
+        <label class="form-label" for="text">Make a Comment: </label>
         <textarea class="form-control" name="text" id="text" placeholder="What do you think about this post?" cols="30"
-            rows="10"></textarea>
-        <button class="btn btn-outline-secondary mt-3 mb-5">Comment</button>
+            rows="4"></textarea>
+        <button class="btn btn-outline-secondary my-3">Comment</button>
     </form>
+    <% for(let comment of post.comments){ %>
+
+        <div class="mb-3 card <%= viewMode ==='light' ? " text-dark bg-light mb-3" : "text-white bg-dark mb-3" %>">
+            <div class="card-body">
+                <h5>
+                    <%= comment.author %>
+                </h5>
+                <p>
+                    <%= comment.text %>
+                </p>
+                <p class="text-muted">Likes: <%= comment.likes%>
+                </p>
+            </div>
+        </div>
+        <% } %>
