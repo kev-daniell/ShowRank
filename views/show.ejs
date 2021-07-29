@@ -27,26 +27,9 @@
         </div>
     </div>
 
-
-
-
-    <!-- <div>
-        <p>
-            User: <a href="##">
-                <%= post.author %>
-            </a>
-        </p>
-        <h3>
-            <%= post.title%>
-        </h3>
-        <p>
-            <%= post.text %>
-        </p>
-        <a href="#">Comments: 0 </a>
-        <br>
-        <% if(post.author==="k6daniel" ){ %>
-            <a href="/posts/<%= post._id %>/edit">Edit</a>
-            <% } %>
-                <hr>
-    </div>
-    <button><a href="/posts">Back to All Posts</a></button> -->
+    <form action="/posts/<%=post._id%>/comment" method="POST">
+        <label for="text">Make a Comment: </label>
+        <textarea class="form-control" name="text" id="text" placeholder="What do you think about this post?" cols="30"
+            rows="10"></textarea>
+        <button class="btn btn-outline-secondary mt-3 mb-5">Comment</button>
+    </form>

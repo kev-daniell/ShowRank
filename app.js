@@ -2,12 +2,14 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const mongoose = require('mongoose');
-const Post = require('./models/posts')
 const methodOverride = require('method-override')
 const ejsMate = require('ejs-mate')
-const AppError = require('./utilities/AppError')
 const catchAsync = require('./utilities/catchAsync')
 const Joi = require('joi')
+
+const Post = require('./models/posts')
+const AppError = require('./utilities/AppError')
+const Comment = require('./models/comments')
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -16,7 +18,6 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 app.engine('ejs', ejsMate);
-const lel;
 
 mongoose.connect('mongodb://localhost:27017/showApp', { useNewUrlParser: true, useUnifiedTopology: true, })
     .then(() => {
@@ -53,6 +54,22 @@ app.get('/change', (req, res) => {
     res.redirect('/')
 })
 
+//All the commenting routes
+
+app.post('/posts/:id/comment', async (req, res) => {
+    const { text } = req.body;
+    const { id } = req.params;
+    // const newComment = new Comment({ author: author, text: text, post: id })
+    // const currentPost = await Post.findById(id);
+    // currentPost.comments.push(newComment);
+    // await newComment.save()
+    // await currentPost.save()
+    res.redirect(`/posts/${id}`)
+})
+
+
+
+//All the posting routes
 app.get('/posts/create', (req, res) => {
     res.render('create', { viewMode });
 })
