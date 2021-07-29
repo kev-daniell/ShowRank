@@ -27,14 +27,19 @@
         </div>
     </div>
 
-    <form action="/posts/<%=post._id%>/comment" method="POST">
+    <form class="needs-validation" action="/posts/<%=post._id%>/comment" method="POST" novalidate>
         <label class="form-label" for="text">Make a Comment: </label>
         <textarea class="form-control" name="text" id="text" placeholder="What do you think about this post?" cols="30"
-            rows="4"></textarea>
+            rows="4" required></textarea>
+        <div class="invalid-feedback">
+            You need to type something to make a comment.
+        </div>
         <button class="btn btn-outline-secondary my-3">Comment</button>
     </form>
-    <% for(let comment of post.comments){ %>
 
+
+
+    <% for(let comment of post.comments){ %>
         <div class="mb-3 card <%= viewMode ==='light' ? " text-dark bg-light mb-3" : "text-white bg-dark mb-3" %>">
             <div class="card-body">
                 <h5>
@@ -45,6 +50,9 @@
                 </p>
                 <p class="text-muted">Likes: <%= comment.likes%>
                 </p>
+                <form action="/posts/comments/<%=comment._id%>?_method=DELETE" method="POST">
+                    <button class="btn btn-outline-secondary">Delete Comment</button>
+                </form>
             </div>
         </div>
         <% } %>

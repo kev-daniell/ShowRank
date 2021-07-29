@@ -68,6 +68,13 @@ app.post('/posts/:id/comment', catchAsync(async (req, res) => {
     res.redirect(`/posts/${id}`)
 }))
 
+app.delete('/posts/:id/commment/:cID', catchAsync(async (req, res) => {
+    const { id, cID } = req.params;
+    const currentComment = await Comment.findByIdAndDelete(cID)
+    const currentPost = await Post.findById(id)
+    res.redirect(`/posts/${INSERT}`);
+}))
+
 
 
 //All the posting routes
