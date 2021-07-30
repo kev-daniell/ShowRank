@@ -41,6 +41,8 @@ const validatePost = (req, res, next) => {
     }
     else next()
 }
+
+
 //Routing to home page
 app.get('/', (req, res) => {
     res.render('home', { viewMode })
@@ -56,6 +58,9 @@ app.get('/change', (req, res) => {
 
 //All the commenting routes
 
+
+
+
 app.post('/posts/:id/comment', catchAsync(async (req, res) => {
     const { text } = req.body;
     const { id } = req.params;
@@ -68,16 +73,19 @@ app.post('/posts/:id/comment', catchAsync(async (req, res) => {
     res.redirect(`/posts/${id}`)
 }))
 
-app.delete('/posts/:id/commment/:cID', catchAsync(async (req, res) => {
-    const { id, cID } = req.params;
-    const currentComment = await Comment.findByIdAndDelete(cID)
-    const currentPost = await Post.findById(id)
-    res.redirect(`/posts/${INSERT}`);
+
+
+app.delete('/posts/:id/comment/:commentId', catchAsync(async (req, res) => {
+    const { id, commentId } = req.params;
+    await Post.findByIdAndUpdate(id, { $pull: { comments: commentId } }, { useFindAndModify: false })
+    await Comment.findByIdAndDelete(commentId, { useFindAndModify: false })
+    res.redirect(`/posts/${id}`);
 }))
 
 
 
 //All the posting routes
+
 app.get('/posts/create', (req, res) => {
     res.render('create', { viewMode });
 })
@@ -118,11 +126,15 @@ app.patch('/posts/:id', validatePost, catchAsync(async (req, res) => {
     res.redirect('/posts')
 }))
 
+
+
 app.delete('/posts/:id', catchAsync(async (req, res) => {
     const { id } = req.params;
     await Post.findByIdAndDelete(id, { useFindAndModify: false })
     res.redirect('/posts')
 }))
+
+
 
 app.all('*', (req, res, next) => {
     next(new AppError('Sorry Page Not Found', 404))

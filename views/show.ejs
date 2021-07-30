@@ -42,16 +42,24 @@
     <% for(let comment of post.comments){ %>
         <div class="mb-3 card <%= viewMode ==='light' ? " text-dark bg-light mb-3" : "text-white bg-dark mb-3" %>">
             <div class="card-body">
-                <h5>
-                    <%= comment.author %>
-                </h5>
-                <p>
+                <div class="d-flex w-100 justify-content-between">
+                    <p class="card-text text-muted">
+                        <a href="/USERPROFILE OR SOMETHING">
+                            <%= comment.author %>
+                        </a>
+                    </p>
+                    <small class="text-muted">5 days ago</small>
+                </div>
+
+                <p class="card-text">
                     <%= comment.text %>
                 </p>
                 <p class="text-muted">Likes: <%= comment.likes%>
                 </p>
-                <form action="/posts/comments/<%=comment._id%>?_method=DELETE" method="POST">
-                    <button class="btn btn-outline-secondary">Delete Comment</button>
+                <!-- <a class="btn btn-sm btn-outline-secondary" href="/posts/<%=post._id%>/comment/<%= comment._id %>">click
+                    me</a> -->
+                <form action="/posts/<%=post._id%>/comment/<%= comment._id %>?_method=DELETE" method="POST">
+                    <button class="btn btn-sm btn-outline-secondary">Delete Comment</button>
                 </form>
             </div>
         </div>
