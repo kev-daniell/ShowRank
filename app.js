@@ -82,6 +82,7 @@ app.delete('/posts/:id/comment/:commentId', catchAsync(async (req, res) => {
     res.redirect(`/posts/${id}`);
 }))
 
+//ADD IN EDITING RIGHT HERE --THE GET ROUTE AND THE PATCH ROUTE
 
 
 //All the posting routes

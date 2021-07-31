@@ -37,6 +37,10 @@
         <button class="btn btn-outline-secondary my-3">Comment</button>
     </form>
 
+    <!-- Have to add in fancy js to make edit form seamlessly appear  -->
+    <!-- <h1 style="display: block" id="unwanted">I am unwanted text</h1>
+    <button class="btn btn-sm btn-outline-secondary" id="button">CLICK ME TO HIDE THE TEXT</button> -->
+
 
 
     <% for(let comment of post.comments){ %>
@@ -56,11 +60,21 @@
                 </p>
                 <p class="text-muted">Likes: <%= comment.likes%>
                 </p>
-                <!-- <a class="btn btn-sm btn-outline-secondary" href="/posts/<%=post._id%>/comment/<%= comment._id %>">click
-                    me</a> -->
                 <form action="/posts/<%=post._id%>/comment/<%= comment._id %>?_method=DELETE" method="POST">
                     <button class="btn btn-sm btn-outline-secondary">Delete Comment</button>
                 </form>
             </div>
         </div>
         <% } %>
+
+            <script>
+                var text = document.getElementById('unwanted')
+                const btn = document.getElementById('button')
+                btn.addEventListener('click', () => {
+                    if (text.style.display == 'block') {
+                        text.style.display = 'none'
+                    } else {
+                        text.style.display = 'block'
+                    }
+                })
+            </script>
