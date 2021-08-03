@@ -10,16 +10,20 @@
                     <a href="/posts/<%= posts[length - i]._id %>"
                         class="list-group-item list-group-item <%= viewMode ==='light' ? " list-group-item-light"
                         : "list-group-item-dark" %>">
-                        <p class="card-text">
-                            <%= posts[length - i].author%>
-                        </p>
-                        <div class="d-flex w-100 justify-content-between">
 
+                        <div class="d-flex w-100 justify-content-between">
+                            <p class="card-text">
+                                <%= posts[length - i].author%>
+                            </p>
+                            <small class="text-muted">5 days ago</small>
+                        </div>
+
+                        <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1">
                                 <%= posts[length - i].title%>
                             </h5>
-                            <small class="text-muted">5 days ago</small>
                         </div>
+
                         <% if(posts[length - i].image){ %>
                             <img src="<%= posts[length - i].image %>" class="card-img-top" alt="post pic">
                             <% } %>
