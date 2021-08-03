@@ -1,36 +1,37 @@
 <% layout('layout/boilerplate') %>
-    <h1>Posts on ShowApp: </h1>
-    <br>
-    <a href="/posts/create" class="btn btn-outline-secondary">+ Create a Post</a>
-    <hr>
-    <% for(let i=0; i < posts.length; i++){%>
+    <div class="container Posts">
+        <h1>Posts on ShowApp: </h1>
+        <br>
+        <a href="/posts/create" class="btn btn-outline-secondary">+ Create a Post</a>
+        <hr>
+        <% for(let i=0; i < posts.length; i++){%>
+            <div class="mb-3">
+                <div class="list-group <%= viewMode ==='dark' ? " darkLG":"lightLG" %> ">
+                    <a href="/posts/<%= posts[length - i]._id %>"
+                        class="list-group-item list-group-item <%= viewMode ==='light' ? " list-group-item-light"
+                        : "list-group-item-dark" %>">
+                        <p class="card-text">
+                            <%= posts[length - i].author%>
+                        </p>
+                        <div class="d-flex w-100 justify-content-between">
 
-        <div class="mb-3">
-            <div class="list-group <%= viewMode ==='dark' ? " darkLG":"lightLG" %> ">
-                <a href="/posts/<%= posts[length - i]._id %>"
-                    class="list-group-item list-group-item <%= viewMode ==='light' ? " list-group-item-light"
-                    : "list-group-item-dark" %>">
-                    <p class="card-text">
-                        <%= posts[length - i].author%>
-                    </p>
-                    <div class="d-flex w-100 justify-content-between">
-
-                        <h5 class="mb-1">
-                            <%= posts[length - i].title%>
-                        </h5>
-                        <small class="text-muted">5 days ago</small>
-                    </div>
-                    <% if(posts[length - i].image){ %>
-                        <img src="<%= posts[length - i].image %>" class="card-img-top" alt="post pic">
-                        <% } %>
-                            <p class="mb-1">
-                                <%= posts[length - i].text %>
-                            </p>
-                            <br>
-                            <section>
-                                <small class="text-muted">Comments: <%=posts[length-i].comments.length%></small>
-                            </section>
-                </a>
+                            <h5 class="mb-1">
+                                <%= posts[length - i].title%>
+                            </h5>
+                            <small class="text-muted">5 days ago</small>
+                        </div>
+                        <% if(posts[length - i].image){ %>
+                            <img src="<%= posts[length - i].image %>" class="card-img-top" alt="post pic">
+                            <% } %>
+                                <p class="mb-1">
+                                    <%= posts[length - i].text %>
+                                </p>
+                                <br>
+                                <section>
+                                    <small class="text-muted">Comments: <%=posts[length-i].comments.length%></small>
+                                </section>
+                    </a>
+                </div>
             </div>
-        </div>
-        <% } %>
+            <% } %>
+    </div>

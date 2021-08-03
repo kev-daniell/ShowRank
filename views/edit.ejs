@@ -1,33 +1,36 @@
 <% layout('layout/boilerplate') %>
-
-    <h1>Edit Your Post</h1>
-    <br>
-    <form class="needs-validation" action="/posts/<%=post._id%>?_method=PATCH" method="POST" novalidate>
-        <p>User: <%= post.author %>
-        </p>
-        <div>
-            <label class="form-label" for="title">Title:</label>
-            <input class="form-control" value="<%= post.title %>" type="text" name="title" id="title"
-                placeholder="title" required>
-            <div class="invalid-feedback">
-                You cannot have the title empty
-            </div>
-        </div>
-
+    <div class="Posts">
+        <h1>Edit Your Post</h1>
         <br>
-        <label class="form-label" for="text">Post Content:</label>
-        <section>
-            <textarea class="form-control" name="text" id="text" cols="100" rows="10"><%= post.text %> </textarea>
-        </section>
-        <label class="form-label mt-3" for="inputGroupFile03">Image Upload: </label>
-        <input class="form-control" type="text" name="image" id="image" value="<%= post.image %>"
-            placeholder="Insert image adress"> <br>
-        <button class="btn btn-outline-secondary">Update</button>
-    </form>
-    <br>
-    <form action="/posts/<%= post._id %>?_method=DELETE" method="POST">
-        <button class="btn btn-outline-secondary">Delete Post</button>
-    </form>
-    <br>
-    <a class="btn btn-outline-secondary" href="/posts/<%= post._id %>">Back to Original Post</a>
-    <a class="btn btn-outline-secondary" href="/posts">Back to All Posts</a>
+        <form class="needs-validation" action="/posts/<%=post._id%>?_method=PATCH" method="POST" novalidate>
+            <p>User: <%= post.author %>
+            </p>
+            <div>
+                <label class="form-label" for="title">Title:</label>
+                <input class="form-control" value="<%= post.title %>" type="text" name="title" id="title"
+                    placeholder="title" required>
+                <div class="invalid-feedback">
+                    You cannot have the title empty
+                </div>
+            </div>
+
+            <br>
+            <label class="form-label" for="text">Post Content:</label>
+            <section>
+                <textarea class="form-control" name="text" id="text" cols="100" rows="10"><%= post.text %> </textarea>
+            </section>
+            <label class="form-label mt-3" for="inputGroupFile03">Image Upload: </label>
+            <input class="form-control" type="text" name="image" id="image" value="<%= post.image %>"
+                placeholder="Insert image adress"> <br>
+            <button class="btn btn-outline-secondary">Update</button>
+        </form>
+        <br>
+        <form action="/posts/<%= post._id %>?_method=DELETE" method="POST">
+            <button class="btn btn-outline-secondary">Delete Post</button>
+        </form>
+        <br>
+        <div class="mb-3">
+            <a class="btn btn-outline-secondary" href="/posts/<%= post._id %>">Back to Original Post</a>
+            <a class="btn btn-outline-secondary" href="/posts">Back to All Posts</a>
+        </div>
+    </div>

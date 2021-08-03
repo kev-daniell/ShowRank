@@ -24,3 +24,10 @@
     color:grey;
 }
 
+@media screen and (min-width: 992px) {
+    .Posts{
+        width: 50%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
