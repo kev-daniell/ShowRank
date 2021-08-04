@@ -53,7 +53,7 @@ router.post('/', validatePost, catchAsync(async (req, res) => {
 router.patch('/:id', validatePost, catchAsync(async (req, res) => {
     const { id } = req.params;
     const { title, text, image } = req.body;
-    const currentPost = await Post.findByIdAndUpdate(id, { title: title, text: text, image: image }, { runValidators: true, useFindAndModify: false })
+    const currentPost = await Post.findByIdAndUpdate(id, { title: title, text: text, image: image }, { runValidators: true })
     await currentPost.save()
     res.redirect('/posts')
 }))
@@ -62,7 +62,7 @@ router.patch('/:id', validatePost, catchAsync(async (req, res) => {
 
 router.delete('/:id', catchAsync(async (req, res) => {
     const { id } = req.params;
-    await Post.findByIdAndDelete(id, { useFindAndModify: false })
+    await Post.findByIdAndDelete(id)
     res.redirect('/posts')
 }))
 

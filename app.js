@@ -4,6 +4,8 @@ const path = require('path');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override')
 const ejsMate = require('ejs-mate')
+const session = require('express-session')
+const flash = require('connect-flash')
 
 const AppError = require('./utilities/AppError')
 const posts = require('./routes/posts')
@@ -15,9 +17,25 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
+app.use(flash());
+
+const sessionConfig = {
+    secret: 'thisisabadsecret',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        httpOnly: true,
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        maxAge: 1000 * 60 * 60 * 24 * 7,
+    }
+}
+app.use(session(sessionConfig))
+
 app.engine('ejs', ejsMate);
 
-mongoose.connect('mongodb://localhost:27017/showApp', { useNewUrlParser: true, useUnifiedTopology: true, })
+
+mongoose.connect('mongodb://localhost:27017/showApp',
+    { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
     .then(() => {
         console.log('connection open')
     })
