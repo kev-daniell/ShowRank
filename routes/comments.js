@@ -5,6 +5,7 @@ const Joi = require('joi')
 const catchAsync = require('../utilities/catchAsync')
 const Comment = require('../models/comments')
 const Post = require('../models/posts')
+const AppError = require('../utilities/AppError')
 
 const validateComment = (req, res, next) => {
     const commentSchema = Joi.string().required()
@@ -22,12 +23,14 @@ author = 'k6daniel'
 router.post('/', validateComment, catchAsync(async (req, res) => {
     const { text } = req.body;
     const { id } = req.params;
+    if (text.trim().length === 0) throw new AppError('You CANNOT leave a comment blank')
     const newComment = new Comment({ author: author, text: text })
     const currentPost = await Post.findById(id);
     currentPost.comments.push(newComment);
     newComment.post = currentPost;
     await newComment.save()
     await currentPost.save()
+    req.flash('success', 'Created new comment')
     res.redirect(`/posts/${id}`)
 }))
 

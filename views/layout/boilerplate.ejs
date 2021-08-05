@@ -22,7 +22,8 @@
 <body class="<%=viewMode%> d-flex flex-column vh-100">
     <%- include('../partials/navbar') %>
         <main class="container">
-            <%- body %>
+            <%- include('../partials/flash') %>
+                <%- body %>
         </main>
         <%- include('../partials/footer') %>
             <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"

@@ -47,6 +47,14 @@ mongoose.connect('mongodb://localhost:27017/showApp',
 let viewMode = "dark";
 const author = "k6daniel";
 
+//flash middleware
+app.use((req, res, next) => {
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error')
+    next();
+})
+
+
 //Routing to home page
 app.get('/', (req, res) => {
     res.render('home', { viewMode })
