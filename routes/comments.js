@@ -23,7 +23,10 @@ author = 'k6daniel'
 router.post('/', validateComment, catchAsync(async (req, res) => {
     const { text } = req.body;
     const { id } = req.params;
-    if (text.trim().length === 0) throw new AppError('You CANNOT leave a comment blank')
+    if (text.trim().length === 0) {
+        req.flash('error', 'You need text in order to make a comment')
+        return res.redirect(`/posts/${id}`)
+    }
     const newComment = new Comment({ author: author, text: text })
     const currentPost = await Post.findById(id);
     currentPost.comments.push(newComment);
@@ -40,6 +43,7 @@ router.delete('/:commentId', catchAsync(async (req, res) => {
     const { id, commentId } = req.params;
     await Post.findByIdAndUpdate(id, { $pull: { comments: commentId } }, { useFindAndModify: false })
     await Comment.findByIdAndDelete(commentId, { useFindAndModify: false })
+    req.flash('success', 'Your comment has been deleted')
     res.redirect(`/posts/${id}`);
 }))
 

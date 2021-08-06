@@ -53,7 +53,10 @@ router.get('/:id/edit', catchAsync(async (req, res) => {
 
 router.post('/', validatePost, catchAsync(async (req, res) => {
     const { title, text, image } = req.body;
-    if (title.trim().length === 0) throw new AppError('You CANNOT leave the title blank')
+    if (title.trim().length === 0) {
+        req.flash('error', 'You CANNOT leave the title empty')
+        return res.redirect('/posts/create')
+    }
     const newPost = new Post({ author, title, text, image })
     await newPost.save()
     req.flash('success', 'You made a new post')
@@ -63,7 +66,10 @@ router.post('/', validatePost, catchAsync(async (req, res) => {
 router.patch('/:id', validatePost, catchAsync(async (req, res) => {
     const { id } = req.params;
     const { title, text, image } = req.body;
-    if (title.trim().length === 0) throw new AppError('You CANNOT leave the title blank')
+    if (title.trim().length === 0) {
+        req.flash('error', 'You CANNOT leave the title empty')
+        return res.redirect(`/posts/${id}/edit`)
+    }
     const currentPost = await Post.findByIdAndUpdate(id, { title: title, text: text, image: image }, { runValidators: true })
     await currentPost.save()
     req.flash('success', 'You updated your post')
