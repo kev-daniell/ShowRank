@@ -17,7 +17,6 @@ const validateComment = (req, res, next) => {
     else next()
 }
 
-viewMode = 'dark'
 author = 'k6daniel'
 
 router.post('/', validateComment, catchAsync(async (req, res) => {

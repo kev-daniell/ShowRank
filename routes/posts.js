@@ -16,7 +16,7 @@ const validatePost = (req, res, next) => {
     else next()
 }
 
-viewMode = 'dark'
+viewMode = 'light'
 author = 'k6daniel'
 
 router.get('/create', (req, res) => {

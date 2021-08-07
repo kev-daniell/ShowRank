@@ -4,20 +4,22 @@ const path = require('path');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override')
 const ejsMate = require('ejs-mate')
-const session = require('express-session')
-const flash = require('connect-flash')
+const session = require('express-session');
+const flash = require('connect-flash');
+const passport = require('passport')
+const localStrat = require('passport-local')
 
-const AppError = require('./utilities/AppError')
-const posts = require('./routes/posts')
-const comments = require('./routes/comments')
+
+const AppError = require('./utilities/AppError');
+const postRoutes = require('./routes/posts');
+const commentRoutes = require('./routes/comments');
+const userRoutes = require('./routes/user')
+const User = require('./models/user')
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-app.use(express.static(path.join(__dirname, 'public')))
-app.use(express.urlencoded({ extended: true }))
-app.use(methodOverride('_method'))
-app.use(flash());
+app.engine('ejs', ejsMate);
 
 const sessionConfig = {
     secret: 'thisisabadsecret',
@@ -31,11 +33,19 @@ const sessionConfig = {
 }
 app.use(session(sessionConfig))
 
-app.engine('ejs', ejsMate);
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
+app.use(flash());
 
+app.use(passport.initialize())
+app.use(passport.session())
+passport.use(new localStrat(User.authenticate()))
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 mongoose.connect('mongodb://localhost:27017/showApp',
-    { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
+    { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
     .then(() => {
         console.log('connection open')
     })
@@ -44,7 +54,7 @@ mongoose.connect('mongodb://localhost:27017/showApp',
     })
 
 
-let viewMode = "dark";
+let viewMode = "light";
 const author = "k6daniel";
 
 //flash middleware
@@ -53,6 +63,7 @@ app.use((req, res, next) => {
     res.locals.error = req.flash('error')
     next();
 })
+
 
 
 //Routing to home page
@@ -69,15 +80,16 @@ app.get('/change', (req, res) => {
 
 
 //All the commenting routes
-app.use('/posts/:id/comment', comments)
+app.use('/posts/:id/comment', commentRoutes)
 
 //ADD IN EDITING RIGHT HERE --THE GET ROUTE AND THE PATCH ROUTE
 
 
 //All the posting routes
-app.use('/posts', posts)
+app.use('/posts', postRoutes)
 
-
+//All user related routes
+app.use('/', userRoutes)
 
 app.all('*', (req, res, next) => {
     next(new AppError('Sorry Page Not Found', 404))
