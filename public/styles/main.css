@@ -9,6 +9,10 @@
     color: grey;
 }
 
+.login{
+    margin-left: auto;
+}
+
 .list-group-item-dark{
     background-color: rgb(26, 25, 25);
     color:white

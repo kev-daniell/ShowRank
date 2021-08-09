@@ -53,12 +53,13 @@ mongoose.connect('mongodb://localhost:27017/showApp',
         console.log('ERROR OCCURED', e)
     })
 
-
-let viewMode = "light";
 const author = "k6daniel";
 
 //flash middleware
 app.use((req, res, next) => {
+    if (!req.user) res.locals.viewMode = 'light'
+    else res.locals.viewMode = req.user.viewMode
+    res.locals.currentUser = req.user
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error')
     next();
@@ -68,14 +69,13 @@ app.use((req, res, next) => {
 
 //Routing to home page
 app.get('/', (req, res) => {
-    console.log(req.isAuthenticated())
-    res.render('home', { viewMode, loggedIn: req.isAuthenticated() })
+    res.render('home')
 })
 
 //TRASH changing system
 app.get('/change', (req, res) => {
-    // if (viewMode === "dark") viewMode = "light"; //This can be made way better
-    // else viewMode = "dark";
+
+    console.log(res.locals.viewMode)
     res.redirect('/')
 })
 

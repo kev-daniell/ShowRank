@@ -16,17 +16,16 @@ const validatePost = (req, res, next) => {
     else next()
 }
 
-viewMode = 'light'
 author = 'k6daniel'
 
 router.get('/create', isLoggedIn, (req, res) => {
-    res.render('create', { viewMode });
+    res.render('create');
 })
 
 router.get('/', catchAsync(async (req, res) => {
     const posts = await Post.find().populate('comments')
     const length = posts.length - 1
-    res.render('posts', { posts, viewMode, length })
+    res.render('posts', { posts, length })
 }))
 
 
@@ -37,7 +36,7 @@ router.get('/:id', catchAsync(async (req, res, next) => {
         req.flash('error', `Sorry we can't find that post`)
         return res.redirect('/posts')
     }
-    res.render('show', { viewMode, post: currentPost })
+    res.render('show', { post: currentPost })
 }))
 
 
@@ -48,7 +47,7 @@ router.get('/:id/edit', catchAsync(async (req, res) => {
         req.flash('error', `Sorry you can't edit that post because it does not exist`)
         return res.redirect('/posts')
     }
-    res.render('edit', { viewMode, post: currentPost })
+    res.render('edit', { post: currentPost })
 }))
 
 router.post('/', isLoggedIn, validatePost, catchAsync(async (req, res) => {
