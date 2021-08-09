@@ -4,7 +4,7 @@ const catchAsync = require('../utilities/catchAsync')
 const Post = require('../models/posts')
 const Joi = require('joi')
 const AppError = require('../utilities/AppError')
-
+const isLoggedIn = require('../middleware')
 //Error checking middleware using JOI, every post needs a title to be created
 const validatePost = (req, res, next) => {
     const postSchema = Joi.string().required()
@@ -19,7 +19,7 @@ const validatePost = (req, res, next) => {
 viewMode = 'light'
 author = 'k6daniel'
 
-router.get('/create', (req, res) => {
+router.get('/create', isLoggedIn, (req, res) => {
     res.render('create', { viewMode });
 })
 
@@ -51,7 +51,7 @@ router.get('/:id/edit', catchAsync(async (req, res) => {
     res.render('edit', { viewMode, post: currentPost })
 }))
 
-router.post('/', validatePost, catchAsync(async (req, res) => {
+router.post('/', isLoggedIn, validatePost, catchAsync(async (req, res) => {
     const { title, text, image } = req.body;
     if (title.trim().length === 0) {
         req.flash('error', 'You CANNOT leave the title empty')

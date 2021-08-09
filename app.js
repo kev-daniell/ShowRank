@@ -68,7 +68,8 @@ app.use((req, res, next) => {
 
 //Routing to home page
 app.get('/', (req, res) => {
-    res.render('home', { viewMode })
+    console.log(req.isAuthenticated())
+    res.render('home', { viewMode, loggedIn: req.isAuthenticated() })
 })
 
 //TRASH changing system
