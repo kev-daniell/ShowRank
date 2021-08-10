@@ -1,13 +1,15 @@
 <!-- Modal -->
+
 <div class="modal fade" id="login" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header <%= viewMode %> ">
                 <h5 class="modal-title" id="staticBackdropLabel">Login</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close <%= viewMode == 'dark' ? 'btn-close-white':''%>"
+                    data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body <%= viewMode %> ">
                 <form class="needs-validation" action="/login" method="POST" novalidate>
                     <div class="mb-3">
                         <label class="form-label" for="username">Username: </label>

@@ -27,8 +27,8 @@ const sessionConfig = {
     saveUninitialized: true,
     cookie: {
         httpOnly: true,
-        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
-        maxAge: 1000 * 60 * 60 * 24 * 7,
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 30,
+        maxAge: 1000 * 60 * 60 * 24 * 30,
     }
 }
 app.use(session(sessionConfig))
@@ -54,10 +54,11 @@ mongoose.connect('mongodb://localhost:27017/showApp',
     })
 
 const author = "k6daniel";
+var viewMode = 'light'
 
 //flash middleware
 app.use((req, res, next) => {
-    if (!req.user) res.locals.viewMode = 'light'
+    if (!req.user) res.locals.viewMode = viewMode
     else res.locals.viewMode = req.user.viewMode
     res.locals.currentUser = req.user
     res.locals.success = req.flash('success');
@@ -73,8 +74,16 @@ app.get('/', (req, res) => {
 })
 
 //TRASH changing system
-app.get('/change', (req, res) => {
-
+app.get('/change', async (req, res) => {
+    if (req.user) {
+        const currentUser = await User.findById(req.user._id)
+        if (currentUser.viewMode == 'light') currentUser.viewMode = 'dark';
+        else currentUser.viewMode = 'light'
+        await currentUser.save()
+    } else {
+        if (viewMode == 'light') viewMode = 'dark';
+        else viewMode = 'light'
+    }
     console.log(res.locals.viewMode)
     res.redirect('/')
 })
