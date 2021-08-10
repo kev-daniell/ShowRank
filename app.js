@@ -58,6 +58,7 @@ var viewMode = 'light'
 
 //flash middleware
 app.use((req, res, next) => {
+    console.log(req.session)
     if (!req.user) res.locals.viewMode = viewMode
     else res.locals.viewMode = req.user.viewMode
     res.locals.currentUser = req.user
@@ -82,7 +83,6 @@ app.get('/change', async (req, res) => {
         if (viewMode == 'light') viewMode = 'dark';
         else viewMode = 'light'
     }
-    console.log(res.locals.viewMode)
     res.redirect('/')
 })
 

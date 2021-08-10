@@ -5,7 +5,7 @@
                 <div class="d-flex w-100 justify-content-between">
                     <p class="card-text">
                         User: <a href="##">
-                            <%= post.author %>
+                            <%= post.author.username %>
                         </a>
                     </p>
                     <small class="text-muted">5 days ago</small>
@@ -15,6 +15,10 @@
                         <%= post.title %>
                     </h4>
                 </div>
+                <p>
+                    <%= post.author._id %>
+                        <%= currentUser._id %>
+                </p>
                 <% if(post.image){ %>
                     <img class="card-img-top" src="<%= post.image %>" alt="pic">
                     <% } %>
@@ -23,7 +27,7 @@
                         </p>
                         <a href="/posts" class="btn btn-outline-secondary">Back to All
                             Posts</a>
-                        <% if(post.author==="k6daniel" ){ %>
+                        <% if(post.author.email==currentUser.email && post.author.username==currentUser.username){ %>
                             <a class="btn btn-outline-secondary" href="/posts/<%= post._id %>/edit">Edit</a>
                             <% } %>
             </div>
@@ -47,8 +51,7 @@
                                 <h6>Login or Sign up to join the conversation!</h6>
                             </div>
                             <div>
-                                <a class="btn btn-outline-secondary" href="#" data-bs-toggle="modal"
-                                    data-bs-target="#login">Login</a>
+                                <a class="btn btn-outline-secondary" href="/login">Login</a>
                                 <a class="btn btn-outline-secondary" href="/register">Sign Up</a>
                             </div>
                         </div>
@@ -60,31 +63,36 @@
     <button class="btn btn-sm btn-outline-secondary" id="button">CLICK ME TO HIDE THE TEXT</button> -->
 
                     <h5 class="mt-3">Comments: </h5>
-                    <% for(let comment of post.comments){ %>
-                        <div class="mb-3 card <%= viewMode ==='light' ? " text-dark bg-light mb-3"
-                            : "text-white bg-dark mb-3" %>">
-                            <div class="card-body">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <p class="card-text text-muted">
-                                        <a href="/USERPROFILE OR SOMETHING">
-                                            <%= comment.author %>
-                                        </a>
-                                    </p>
-                                    <small class="text-muted">5 days ago</small>
-                                </div>
-
-                                <p class="card-text">
-                                    <%= comment.text %>
-                                </p>
-                                <p class="text-muted">Likes: <%= comment.likes%>
-                                </p>
-                                <form action="/posts/<%=post._id%>/comment/<%= comment._id %>?_method=DELETE"
-                                    method="POST">
-                                    <button class="btn btn-sm btn-outline-secondary">Delete Comment</button>
-                                </form>
-                            </div>
+                    <% if(post.comments.length==0){ %>
+                        <div class="text-center mb-4 text-muted">
+                            <small>Looks like nobody's here, be the first to comment!</small>
                         </div>
                         <% } %>
+                            <% for(let comment of post.comments){ %>
+                                <div class="mb-3 card <%= viewMode ==='light' ? " text-dark bg-light mb-3"
+                                    : "text-white bg-dark mb-3" %>">
+                                    <div class="card-body">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <p class="card-text text-muted">
+                                                <a href="/USERPROFILE OR SOMETHING">
+                                                    <%= comment.author %>
+                                                </a>
+                                            </p>
+                                            <small class="text-muted">5 days ago</small>
+                                        </div>
+
+                                        <p class="card-text">
+                                            <%= comment.text %>
+                                        </p>
+                                        <p class="text-muted">Likes: <%= comment.likes%>
+                                        </p>
+                                        <form action="/posts/<%=post._id%>/comment/<%= comment._id %>?_method=DELETE"
+                                            method="POST">
+                                            <button class="btn btn-sm btn-outline-secondary">Delete Comment</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <% } %>
     </div>
     <script>
         var text = document.getElementById('unwanted')

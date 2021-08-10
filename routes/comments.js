@@ -17,7 +17,6 @@ const validateComment = (req, res, next) => {
     else next()
 }
 
-author = 'k6daniel'
 
 router.post('/', validateComment, catchAsync(async (req, res) => {
     const { text } = req.body;
@@ -26,7 +25,8 @@ router.post('/', validateComment, catchAsync(async (req, res) => {
         req.flash('error', 'You need text in order to make a comment')
         return res.redirect(`/posts/${id}`)
     }
-    const newComment = new Comment({ author: author, text: text })
+    const author = req.user._id
+    const newComment = new Comment({ author, text: text })
     const currentPost = await Post.findById(id);
     currentPost.comments.push(newComment);
     newComment.post = currentPost;
