@@ -66,8 +66,6 @@ app.use((req, res, next) => {
     next();
 })
 
-
-
 //Routing to home page
 app.get('/', (req, res) => {
     res.render('home')
