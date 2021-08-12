@@ -15,10 +15,7 @@
                         <%= post.title %>
                     </h4>
                 </div>
-                <p>
-                    <%= post.author._id %>
-                        <%= currentUser._id %>
-                </p>
+
                 <% if(post.image){ %>
                     <img class="card-img-top" src="<%= post.image %>" alt="pic">
                     <% } %>
@@ -27,7 +24,7 @@
                         </p>
                         <a href="/posts" class="btn btn-outline-secondary">Back to All
                             Posts</a>
-                        <% if(post.author.email==currentUser.email && post.author.username==currentUser.username){ %>
+                        <% if(currentUser && post.author.equals(currentUser._id)){ %>
                             <a class="btn btn-outline-secondary" href="/posts/<%= post._id %>/edit">Edit</a>
                             <% } %>
             </div>
@@ -75,7 +72,7 @@
                                         <div class="d-flex w-100 justify-content-between">
                                             <p class="card-text text-muted">
                                                 <a href="/USERPROFILE OR SOMETHING">
-                                                    <%= comment.author %>
+                                                    <%= comment.author.username %>
                                                 </a>
                                             </p>
                                             <small class="text-muted">5 days ago</small>
@@ -86,10 +83,14 @@
                                         </p>
                                         <p class="text-muted">Likes: <%= comment.likes%>
                                         </p>
-                                        <form action="/posts/<%=post._id%>/comment/<%= comment._id %>?_method=DELETE"
-                                            method="POST">
-                                            <button class="btn btn-sm btn-outline-secondary">Delete Comment</button>
-                                        </form>
+                                        <% if(currentUser && comment.author.equals(currentUser._id)){ %>
+                                            <form
+                                                action="/posts/<%=post._id%>/comment/<%= comment._id %>?_method=DELETE"
+                                                method="POST">
+                                                <button class="btn btn-sm btn-outline-secondary">Delete Comment</button>
+                                            </form>
+                                            <% } %>
+
                                     </div>
                                 </div>
                                 <% } %>

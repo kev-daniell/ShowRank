@@ -3,19 +3,9 @@ const router = express.Router()
 const catchAsync = require('../utilities/catchAsync')
 const Post = require('../models/posts')
 const User = require('../models/user')
-const Joi = require('joi')
 const AppError = require('../utilities/AppError')
-const isLoggedIn = require('../middleware')
-//Error checking middleware using JOI, every post needs a title to be created
-const validatePost = (req, res, next) => {
-    const postSchema = Joi.string().required()
-    const { error } = postSchema.validate(req.body.title)
-    if (error) {
-        const msg = error.details.map(el => el.message).join(',')
-        throw new AppError(`A Title is required for a Post, ${msg}`, 400)
-    }
-    else next()
-}
+const { isAuthor, isLoggedIn, validatePost } = require('../middleware')
+
 
 router.get('/create', isLoggedIn, (req, res) => {
     res.render('create');
@@ -30,8 +20,13 @@ router.get('/', catchAsync(async (req, res) => {
 
 router.get('/:id', catchAsync(async (req, res, next) => {
     const { id } = req.params;
-    const currentPost = await Post.findById(id).populate('comments').populate('author')
-    console.log(currentPost)
+    const currentPost = await Post.findById(id).populate({
+        path: 'comments',
+        populate: {
+            path: 'author'
+        }
+    }).populate('author')
+
     if (!currentPost) {
         req.flash('error', `Sorry we can't find that post`)
         return res.redirect('/posts')
@@ -40,7 +35,7 @@ router.get('/:id', catchAsync(async (req, res, next) => {
 }))
 
 
-router.get('/:id/edit', isLoggedIn, catchAsync(async (req, res) => {
+router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(async (req, res) => {
     const { id } = req.params;
     const currentPost = await Post.findById(id)
     if (!currentPost) {
@@ -66,7 +61,7 @@ router.post('/', isLoggedIn, validatePost, catchAsync(async (req, res) => {
     res.redirect('/posts')
 }))
 
-router.patch('/:id', validatePost, catchAsync(async (req, res) => {
+router.patch('/:id', isLoggedIn, isAuthor, validatePost, catchAsync(async (req, res) => {
     const { id } = req.params;
     const { title, text, image } = req.body;
     if (title.trim().length === 0) {
@@ -81,8 +76,9 @@ router.patch('/:id', validatePost, catchAsync(async (req, res) => {
 
 
 
-router.delete('/:id', catchAsync(async (req, res) => {
+router.delete('/:id', isLoggedIn, isAuthor, catchAsync(async (req, res) => {
     const { id } = req.params;
+    await User.findByIdAndUpdate(req.user._id, { $pull: { posts: id } }, { useFindAndModify: false })
     await Post.findByIdAndDelete(id)
     req.flash('success', 'Your post has been deleted')
     res.redirect('/posts')

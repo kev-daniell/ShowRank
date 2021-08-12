@@ -17,9 +17,23 @@
                     <a class="nav-link" href="/login" data-bs-toggle="modal" data-bs-target="#login">Login</a>
                     <a class="nav-link" href="/register">Register</a>
                     <% }else{ %>
-                        <a class="nav-link" href="/logout">Logout</a>
-                        <% } %>
+                        <li class="nav-item dropdown dropstart">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <%= currentUser.username %>
+                            </a>
+                            <ul class="dropdown-menu <%= viewMode === 'dark' ? 'dropdown-menu-dark': '' %>"
+                                aria-labelledby="navbarDarkDropdownMenuLink">
+                                <li><a class="dropdown-item" href="#">User Profile</a></li>
+                                <li><a class="dropdown-item" href="/change">Toggle Nightmode</a></li>
+                                <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                            </ul>
+                        </li>
+
             </div>
+
+            <% } %>
         </div>
+    </div>
     </div>
 </nav>
