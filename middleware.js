@@ -11,6 +11,14 @@ module.exports.isLoggedIn = (req, res, next) => {
     } else next()
 }
 
+module.exports.saveUrl = (req, res, next) => {
+    if (!req.isAuthenticated()) {
+        req.session.returnTo = req.originalUrl;
+    }
+    next();
+}
+
+
 module.exports.isAuthor = async (req, res, next) => {
     const { id } = req.params;
     const currentPost = await Post.findById(id)

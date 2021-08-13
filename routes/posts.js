@@ -4,7 +4,7 @@ const catchAsync = require('../utilities/catchAsync')
 const Post = require('../models/posts')
 const User = require('../models/user')
 const AppError = require('../utilities/AppError')
-const { isAuthor, isLoggedIn, validatePost } = require('../middleware')
+const { isAuthor, isLoggedIn, validatePost, saveUrl } = require('../middleware')
 
 
 router.get('/create', isLoggedIn, (req, res) => {
@@ -18,7 +18,7 @@ router.get('/', catchAsync(async (req, res) => {
 }))
 
 
-router.get('/:id', catchAsync(async (req, res, next) => {
+router.get('/:id', saveUrl, catchAsync(async (req, res, next) => {
     const { id } = req.params;
     const currentPost = await Post.findById(id).populate({
         path: 'comments',

@@ -68,6 +68,7 @@ app.use((req, res, next) => {
 
 //Routing to home page
 app.get('/', (req, res) => {
+    delete req.session.returnTo
     res.render('home')
 })
 
