@@ -11,7 +11,7 @@ router.get('/create', isLoggedIn, (req, res) => {
     res.render('create');
 })
 
-router.get('/', catchAsync(async (req, res) => {
+router.get('/', saveUrl, catchAsync(async (req, res) => {
     const posts = await Post.find().populate('comments').populate('author')
     const length = posts.length - 1
     res.render('posts', { posts, length })

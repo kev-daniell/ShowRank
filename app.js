@@ -90,8 +90,6 @@ app.get('/change', async (req, res) => {
 //All the commenting routes
 app.use('/posts/:id/comment', commentRoutes)
 
-//ADD IN EDITING RIGHT HERE --THE GET ROUTE AND THE PATCH ROUTE
-
 
 //All the posting routes
 app.use('/posts', postRoutes)

@@ -22,10 +22,10 @@
                         <p class="card-text">
                             <%= post.text %>
                         </p>
-                        <a href="/posts" class="btn btn-outline-secondary">Back to All
+                        <a href="/posts" class="btn btn-sm btn-outline-secondary">Back to All
                             Posts</a>
                         <% if(currentUser && post.author.equals(currentUser._id)){ %>
-                            <a class="btn btn-outline-secondary" href="/posts/<%= post._id %>/edit">Edit</a>
+                            <a class="btn btn-sm btn-outline-secondary" href="/posts/<%= post._id %>/edit">Edit</a>
                             <% } %>
             </div>
         </div>
@@ -37,7 +37,7 @@
                 <div class="invalid-feedback">
                     You need to type something to make a comment.
                 </div>
-                <button class="btn btn-outline-secondary my-3">Comment</button>
+                <button class="btn btn-sm btn-outline-secondary my-3">Comment</button>
             </form>
             <% } else{ %>
                 <div class="card <%= viewMode ==='light' ? " text-dark bg-light mb-3" : "text-white bg-dark mb-3" %>
@@ -55,9 +55,7 @@
                     </div>
                 </div>
                 <% } %>
-                    <!-- Have to add in fancy js to make edit form seamlessly appear  -->
-                    <!-- <h1 style="display: block" id="unwanted">I am unwanted text</h1>
-    <button class="btn btn-sm btn-outline-secondary" id="button">CLICK ME TO HIDE THE TEXT</button> -->
+
 
                     <h5 class="mt-3">Comments: </h5>
                     <% if(post.comments.length==0){ %>
@@ -66,7 +64,7 @@
                         </div>
                         <% } %>
                             <% for(let comment of post.comments){ %>
-                                <div class="mb-3 card <%= viewMode ==='light' ? " text-dark bg-light mb-3"
+                                <div class="card <%= viewMode ==='light' ? " text-dark bg-light mb-3"
                                     : "text-white bg-dark mb-3" %>">
                                     <div class="card-body">
                                         <div class="d-flex w-100 justify-content-between">
@@ -81,28 +79,61 @@
                                         <p class="card-text">
                                             <%= comment.text %>
                                         </p>
-                                        <p class="text-muted">Likes: <%= comment.likes%>
-                                        </p>
-                                        <% if(currentUser && comment.author.equals(currentUser._id)){ %>
-                                            <form
-                                                action="/posts/<%=post._id%>/comment/<%= comment._id %>?_method=DELETE"
-                                                method="POST">
-                                                <button class="btn btn-sm btn-outline-secondary">Delete Comment</button>
-                                            </form>
-                                            <% } %>
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <small class="text-muted">Likes: <%= comment.likes%></small>
+
+                                            <% if(currentUser && comment.author.equals(currentUser._id)){ %>
+
+                                                <a class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
+                                                    data-bs-target="#l<%=comment._id%>">Edit</a>
+
+
+                                                <!-- modal -->
+                                                <!-- side note: maybe should not be "static", you should be able to click away from it -->
+                                                <div class="modal fade" id="l<%=comment._id%>" tabindex="-1"
+                                                    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header <%= viewMode %> ">
+                                                                <h5 class="modal-title" id="staticBackdropLabel">Edit
+                                                                    Comment</h5>
+                                                                <button type="button"
+                                                                    class="btn-close <%= viewMode == 'dark' ? 'btn-close-white':''%>"
+                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body <%= viewMode %> ">
+                                                                <form
+                                                                    action="/posts/<%=post._id%>/comment/<%= comment._id %>?_method=PATCH"
+                                                                    method="POST">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label" for="text">Comment:
+                                                                        </label>
+                                                                        <textarea class="form-control" name="text"
+                                                                            id="text" cols="5"
+                                                                            rows="5"><%=comment.text%> </textarea>
+                                                                    </div>
+                                                                    <button
+                                                                        class="mb-2 btn btn-sm btn-outline-secondary">Update</button>
+                                                                </form>
+                                                                <form
+                                                                    action="/posts/<%=post._id%>/comment/<%= comment._id %>?_method=DELETE"
+                                                                    method="POST">
+                                                                    <button
+                                                                        class="btn btn-sm btn-outline-secondary">Delete
+                                                                        comment</button>
+                                                                </form>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <% } else{ %>
+                                                    <span></span>
+                                                    <% } %>
+                                        </div>
+
 
                                     </div>
                                 </div>
                                 <% } %>
     </div>
-    <script>
-        var text = document.getElementById('unwanted')
-        const btn = document.getElementById('button')
-        btn.addEventListener('click', () => {
-            if (text.style.display == 'block') {
-                text.style.display = 'none'
-            } else {
-                text.style.display = 'block'
-            }
-        })
-    </script>

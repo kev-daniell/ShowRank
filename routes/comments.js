@@ -31,7 +31,18 @@ router.post('/', isLoggedIn, validateComment, catchAsync(async (req, res) => {
     res.redirect(`/posts/${id}`)
 }))
 
-
+router.patch('/:commentId', isLoggedIn, isCommentAuthor, catchAsync(async (req, res) => {
+    const { id, commentId } = req.params;
+    const { text } = req.body;
+    if (text.trim().length === 0) {
+        req.flash('error', 'You need text for a comment to exist')
+        return res.redirect(`/posts/${id}`)
+    }
+    const currentComment = await Comment.findByIdAndUpdate(commentId, { text }, { runValidators: true })
+    await currentComment.save()
+    req.flash('success', 'Comment was edited')
+    res.redirect(`/posts/${id}`)
+}))
 
 router.delete('/:commentId', isLoggedIn, isCommentAuthor, catchAsync(async (req, res) => {
     const { id, commentId } = req.params;
