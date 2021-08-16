@@ -83,7 +83,8 @@ app.get('/change', async (req, res) => {
         if (viewMode == 'light') viewMode = 'dark';
         else viewMode = 'light'
     }
-    res.redirect('/')
+    var redirect = req.session.returnTo || '/'
+    res.redirect(redirect)
 })
 
 
