@@ -2,7 +2,7 @@
     <div class="Posts mb-3">
         <h1>Create a New Post</h1>
         <br>
-        <form class="needs-validation" action="/posts" method="POST" novalidate>
+        <form class="needs-validation" action="/posts" method="POST" novalidate enctype="multipart/form-data">
             <div>
                 <label class="form-label" for="title">Title:</label>
                 <input class="form-control" type="text" name="title" id="title" placeholder="Title" required>
@@ -17,12 +17,12 @@
                 <textarea class="form-control" name="text" id="text" cols="100" rows="10"
                     placeholder="Say what you want to say here"></textarea>
             </section>
-            <label class="form-label mt-3" for="inputGroupFile03">Image Upload: </label>
-            <input class="form-control" type="text" name="image" id="image" placeholder="Insert image adress"> <br>
-            <!-- <div class="input-group mb-3">
-            <input name="img" type="file" class="form-control" id="inputGroupFile03"
-                aria-describedby="inputGroupFileAddon03" aria-label="Upload">
-        </div> -->
+            <!-- <label class="form-label mt-3" for="inputGroupFile03">Image Upload: </label>
+            <input class="form-control" type="text" name="image" id="image" placeholder="Insert image adress"> <br> -->
+            <div class="input-group mb-3">
+                <input name="image" type="file" class="form-control" id="inputGroupFile03"
+                    aria-describedby="inputGroupFileAddon03" aria-label="Upload">
+            </div>
             <button class="btn btn-outline-secondary">Post</button>
         </form>
         <a class="mt-3 btn btn-outline-secondary" href="/posts">Back to All Posts</a>

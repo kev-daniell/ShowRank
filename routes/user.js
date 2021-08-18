@@ -6,11 +6,11 @@ const User = require('../models/user')
 const user = require('../controllers/user')
 
 router.route('/register')
-    .get(catchAsync(user.renderRegister))
-    .post(catchAsync(user.makeAccount))
+    .get(user.renderRegister)
+    .post(user.makeAccount)
 
 router.route('/login')
-    .get(catchAsync(user.renderLogin))
+    .get(user.renderLogin)
     .post(passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), user.login)
 
 router.get('/logout', user.logout)

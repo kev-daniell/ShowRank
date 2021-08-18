@@ -2,6 +2,8 @@ const Post = require('../models/posts')
 const Comment = require('../models/comments');
 const User = require('../models/user')
 
+//have to make and export user routes
+//for profile changes/viewing each others profile
 
 module.exports.renderRegister = (req, res) => {
     res.render('auth/register')
