@@ -23,13 +23,14 @@ module.exports.singlePost = async (req, res, next) => {
     if (!currentPost) {
         req.flash('error', `Sorry we can't find that post`)
         return res.redirect('/posts')
+    } else {
+        res.render('show', { post: currentPost })
     }
-    res.render('show', { post: currentPost })
 }
 
 module.exports.editForm = async (req, res) => {
     const { id } = req.params;
-    const currentPost = await Post.findById(id)
+    const currentPost = await Post.findById(id).populate('author')
     if (!currentPost) {
         req.flash('error', `Sorry you can't edit that post because it does not exist`)
         return res.redirect('/posts')

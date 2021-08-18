@@ -4,19 +4,18 @@ const catchAsync = require('../utilities/catchAsync')
 const { isAuthor, isLoggedIn, validatePost, saveUrl } = require('../middleware')
 const post = require('../controllers/posts')
 
-
-router.get('/', saveUrl, catchAsync(post.allPosts))
+router.route('/')
+    .get(saveUrl, catchAsync(post.allPosts))
+    .post(isLoggedIn, validatePost, catchAsync(post.postNewPost))
 
 router.get('/create', isLoggedIn, post.createForm)
 
-router.get('/:id', saveUrl, catchAsync(post.singlePost))
+router.route('/:id')
+    .get(saveUrl, catchAsync(post.singlePost))
+    .patch(isLoggedIn, isAuthor, validatePost, catchAsync(post.patchEdit))
+    .delete(isLoggedIn, isAuthor, catchAsync(post.destroy))
 
 router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(post.editForm))
 
-router.post('/', isLoggedIn, validatePost, catchAsync(post.postNewPost))
-
-router.patch('/:id', isLoggedIn, isAuthor, validatePost, catchAsync(post.patchEdit))
-
-router.delete('/:id', isLoggedIn, isAuthor, catchAsync(post.destroy))
 
 module.exports = router

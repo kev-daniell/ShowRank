@@ -3,7 +3,7 @@
         <h1>Edit Your Post</h1>
         <br>
         <form class="needs-validation" action="/posts/<%=post._id%>?_method=PATCH" method="POST" novalidate>
-            <p>User: <%= post.author %>
+            <p>User: <%= post.author.username %>
             </p>
             <div>
                 <label class="form-label" for="title">Title:</label>
