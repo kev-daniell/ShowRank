@@ -2,6 +2,7 @@ const Post = require("./models/posts")
 const mongoose = require('mongoose')
 const Comment = require('./models/comments')
 const Joi = require('joi')
+const AppError = require('./utilities/AppError')
 
 module.exports.isLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {

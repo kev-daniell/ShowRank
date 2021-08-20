@@ -39,14 +39,15 @@ module.exports.editForm = async (req, res) => {
 }
 
 module.exports.postNewPost = async (req, res) => {
-    const { title, text, image } = req.body;
+    const { title, text } = req.body;
     if (title.trim().length === 0) {
         req.flash('error', 'You CANNOT leave the title empty')
         return res.redirect('/posts/create')
     }
     const author = req.user._id
     const cUser = await User.findById(author)
-    const newPost = new Post({ author, title, text, image })
+    const newPost = new Post({ author, title, text })
+    newPost.image = req.files.map(f => ({ url: f.path, filename: f.filename }))
     cUser.posts.push(newPost)
     await newPost.save()
     await cUser.save()

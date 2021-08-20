@@ -24,15 +24,38 @@
                             </h5>
                         </div>
 
-                        <% if(posts[length - i].image){ %>
-                            <img src="<%= posts[length - i].image %>" class="card-img-top" alt="post pic">
+                        <% if(posts[length - i].image.length> 0){ %>
+                            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    <% posts[length-i].image.forEach((img, i)=> {%>
+                                        <div class="carousel-item <%= i === 0 ? 'active':'' %> "
+                                            data-bs-interval="10000000000000">
+                                            <img src="<%=img.url%> " class="d-block w-100" alt="">
+                                        </div>
+                                        <% }) %>
+                                </div>
+                                <% if(posts[length - i].image.length> 1){ %>
+                                    <button class="carousel-control-prev" type="button"
+                                        data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button"
+                                        data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                    <% } %>
+                            </div>
                             <% } %>
+
                                 <p class="mb-1">
                                     <%= posts[length - i].text %>
                                 </p>
                                 <br>
                                 <section>
-                                    <small class="text-muted">Comments: <%=posts[length-i].comments.length%></small>
+                                    <small class="text-muted">Comments: <%=posts[length-i].comments.length%>
+                                    </small>
                                 </section>
                     </a>
                 </div>

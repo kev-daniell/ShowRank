@@ -22,15 +22,15 @@
             <label class="form-label mt-3" for="inputGroupFile03">Image Upload: </label>
             <input class="form-control" type="text" name="image" id="image" value="<%= post.image %>"
                 placeholder="Insert image adress"> <br>
-            <button class="btn btn-outline-secondary">Update</button>
+            <button class="btn btn-sm btn-outline-secondary">Update</button>
         </form>
         <br>
         <form action="/posts/<%= post._id %>?_method=DELETE" method="POST">
-            <button class="btn btn-outline-secondary">Delete Post</button>
+            <button class="btn btn-sm btn-outline-secondary">Delete Post</button>
         </form>
         <br>
         <div class="mb-3">
-            <a class="btn btn-outline-secondary" href="/posts/<%= post._id %>">Back to Original Post</a>
-            <a class="btn btn-outline-secondary" href="/posts">Back to All Posts</a>
+            <a class="btn btn-sm btn-outline-secondary" href="/posts/<%= post._id %>">Back to Original Post</a>
+            <a class="btn btn-sm btn-outline-secondary" href="/posts">Back to All Posts</a>
         </div>
     </div>
