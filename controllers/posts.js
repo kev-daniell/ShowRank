@@ -57,12 +57,14 @@ module.exports.postNewPost = async (req, res) => {
 
 module.exports.patchEdit = async (req, res) => {
     const { id } = req.params;
-    const { title, text, image } = req.body;
+    const { title, text } = req.body;
     if (title.trim().length === 0) {
         req.flash('error', 'You CANNOT leave the title empty')
         return res.redirect(`/posts/${id}/edit`)
     }
-    const currentPost = await Post.findByIdAndUpdate(id, { title, text, image }, { runValidators: true })
+    const currentPost = await Post.findByIdAndUpdate(id, { title, text }, { runValidators: true })
+    const images = req.files.map(f => ({ url: f.path, filename: f.filename }))
+    currentPost.image.push(...images)
     await currentPost.save()
     req.flash('success', 'You updated your post')
     res.redirect(`/posts/${id}`)

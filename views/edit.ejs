@@ -2,7 +2,8 @@
     <div class="Posts">
         <h1>Edit Your Post</h1>
         <br>
-        <form class="needs-validation" action="/posts/<%=post._id%>?_method=PATCH" method="POST" novalidate>
+        <form class="needs-validation" action="/posts/<%=post._id%>?_method=PATCH" method="POST"
+            enctype="multipart/form-data" novalidate>
             <p>User: <%= post.author.username %>
             </p>
             <div>
@@ -19,9 +20,11 @@
             <section>
                 <textarea class="form-control" name="text" id="text" cols="100" rows="10"><%= post.text %> </textarea>
             </section>
-            <label class="form-label mt-3" for="inputGroupFile03">Image Upload: </label>
-            <input class="form-control" type="text" name="image" id="image" value="<%= post.image %>"
-                placeholder="Insert image adress"> <br>
+            <div class="mb-3">
+                <label class="form-label mt-3" for="image">Add Image: </label>
+                <input name="image" type="file" class="form-control" id="image" aria-describedby="inputGroupFileAddon03"
+                    aria-label="Upload" multiple>
+            </div>
             <button class="btn btn-sm btn-outline-secondary">Update</button>
         </form>
         <br>
