@@ -63,3 +63,8 @@ module.exports.validateComment = (req, res, next) => {
     }
     else next()
 }
+
+module.exports.postDate = (req, res, next) => {
+    req.body.date = new Date(Date.now()).toLocaleDateString();
+    next();
+}

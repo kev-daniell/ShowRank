@@ -44,6 +44,7 @@ module.exports.postNewPost = async (req, res) => {
         req.flash('error', 'You CANNOT leave the title empty')
         return res.redirect('/posts/create')
     }
+    console.log(req.body.date)
     const author = req.user._id
     const cUser = await User.findById(author)
     const newPost = new Post({ author, title, text })
@@ -57,6 +58,7 @@ module.exports.postNewPost = async (req, res) => {
 
 module.exports.patchEdit = async (req, res) => {
     const { id } = req.params;
+    console.log(req.body)
     const { title, text } = req.body;
     if (title.trim().length === 0) {
         req.flash('error', 'You CANNOT leave the title empty')

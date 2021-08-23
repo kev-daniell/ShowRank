@@ -25,6 +25,18 @@
                 <input name="image" type="file" class="form-control" id="image" aria-describedby="inputGroupFileAddon03"
                     aria-label="Upload" multiple>
             </div>
+            <div class="mb-3 d-inline-flex table-responsive">
+                <% post.image.forEach((img, i)=> {%>
+                    <div>
+                        <img class="img-thumbnail" src="<%= img.url %>" alt="picture">
+                        <div class="form-check-inline">
+                            <input id="image-<%= i %>" type="checkbox" name='deleteImages[]'
+                                value="<%= img.filename %>">
+                            <label for="image-<%= i %>">Delete?</label>
+                        </div>
+                    </div>
+                    <% }) %>
+            </div>
             <button class="btn btn-sm btn-outline-secondary">Update</button>
         </form>
         <br>
