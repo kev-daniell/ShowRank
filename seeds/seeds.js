@@ -14,11 +14,13 @@ const seedPosts = [
         author: '611e7e1d06dbe77ca1d710b5',
         title: 'AMC TO THE MOON',
         text: 'amc and gme r gonna go to the moon, diamond hands only baby',
+        postDate: "2021-08-12"
     },
     {
         author: '611e7e1d06dbe77ca1d710b5',
         title: 'What is life',
         text: 'not sure what life is anymore',
+        postDate: "2021-08-12",
         image: {
             url: 'https://i.imgflip.com/2hrn59.jpg',
             filename: 'shouldNotDelete'
@@ -28,6 +30,7 @@ const seedPosts = [
         author: '611e7e1d06dbe77ca1d710b5',
         title: 'Mai bad as hell',
         text: 'felt the need to remind everyone that mai is bad as hell',
+        postDate: "2021-08-12",
         image: {
             url: 'https://i.pinimg.com/originals/84/58/61/84586164248f9862b4117b2c2ab540aa.jpg',
             filename: 'dontdeletepls'

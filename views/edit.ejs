@@ -27,8 +27,9 @@
             </div>
             <div class="mb-3 d-inline-flex table-responsive">
                 <% post.image.forEach((img, i)=> {%>
-                    <div>
-                        <img class="img-thumbnail" src="<%= img.url %>" alt="picture">
+                    <div class="edit-image-thumbnail">
+                        <img class="img-thumbnail" src="<%= img.thumbnail %>" alt="picture">
+                        <br>
                         <div class="form-check-inline">
                             <input id="image-<%= i %>" type="checkbox" name='deleteImages[]'
                                 value="<%= img.filename %>">
@@ -37,6 +38,7 @@
                     </div>
                     <% }) %>
             </div>
+            <br>
             <button class="btn btn-sm btn-outline-secondary">Update</button>
         </form>
         <br>

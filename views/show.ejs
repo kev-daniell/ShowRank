@@ -17,11 +17,10 @@
                 </div>
 
                 <% if(post.image.length> 0){ %>
-                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                    <div id="carouselExampleControls" class="carousel slide">
                         <div class="carousel-inner">
                             <% post.image.forEach((img, i)=> {%>
-                                <div class="carousel-item <%= i === 0 ? 'active':'' %> "
-                                    data-bs-interval="10000000000000">
+                                <div class="carousel-item <%= i === 0 ? 'active':'' %> " data-bs-interval="10000000000">
                                     <img src="<%=img.url%> " class="d-block w-100" alt="">
                                 </div>
                                 <% }) %>

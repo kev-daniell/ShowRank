@@ -15,7 +15,9 @@
                             <p class="card-text">
                                 <%= posts[length - i].author.username%>
                             </p>
-                            <small class="text-muted">5 days ago</small>
+                            <small class="text-muted">
+                                <%= posts[length -i].postDate %>
+                            </small>
                         </div>
 
                         <div class="d-flex w-100 justify-content-between">
@@ -25,22 +27,22 @@
                         </div>
 
                         <% if(posts[length - i].image.length> 0){ %>
-                            <div id="id-<%=posts[length-i]._id%>" class="carousel slide" data-bs-ride="carousel">
+                            <div id="id-<%=posts[length-i]._id%>" class="carousel slide slide-buttons">
                                 <div class="carousel-inner">
                                     <% posts[length - i].image.forEach((img, i)=> {%>
                                         <div class="carousel-item <%= i === 0 ? 'active':'' %>"
-                                            data-bs-interval="10000000000000">
+                                            data-bs-interval="10000000000">
                                             <img src="<%=img.url%>" class="d-block w-100" alt="">
                                         </div>
                                         <% }) %>
                                 </div>
                                 <% if(posts[length - i].image.length> 1){ %>
-                                    <button class="carousel-control-prev" type="button"
+                                    <button class="carousel-control-prev slide-buttons" type="button"
                                         data-bs-target="#id-<%=posts[length-i]._id%>" data-bs-slide="prev">
                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                         <span class="visually-hidden">Previous</span>
                                     </button>
-                                    <button class="carousel-control-next" type="button"
+                                    <button class="carousel-control-next slide-buttons" type="button"
                                         data-bs-target="#id-<%=posts[length-i]._id%>" data-bs-slide="next">
                                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                         <span class="visually-hidden">Next</span>

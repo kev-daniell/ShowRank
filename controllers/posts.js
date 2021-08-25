@@ -1,5 +1,6 @@
 const Post = require('../models/posts');
 const User = require('../models/user')
+const { cloudinary } = require('../cloudinary/index')
 
 module.exports.allPosts = async (req, res) => {
     const posts = await Post.find().populate('comments').populate('author')
@@ -44,10 +45,11 @@ module.exports.postNewPost = async (req, res) => {
         req.flash('error', 'You CANNOT leave the title empty')
         return res.redirect('/posts/create')
     }
-    console.log(req.body.date)
+    console.log(req.body.date) //TEST LINEEEE
+    postDate = req.body.date
     const author = req.user._id
     const cUser = await User.findById(author)
-    const newPost = new Post({ author, title, text })
+    const newPost = new Post({ author, title, text, postDate })
     newPost.image = req.files.map(f => ({ url: f.path, filename: f.filename }))
     cUser.posts.push(newPost)
     await newPost.save()
@@ -58,7 +60,7 @@ module.exports.postNewPost = async (req, res) => {
 
 module.exports.patchEdit = async (req, res) => {
     const { id } = req.params;
-    console.log(req.body)
+    // console.log(req.body)
     const { title, text } = req.body;
     if (title.trim().length === 0) {
         req.flash('error', 'You CANNOT leave the title empty')
@@ -68,12 +70,24 @@ module.exports.patchEdit = async (req, res) => {
     const images = req.files.map(f => ({ url: f.path, filename: f.filename }))
     currentPost.image.push(...images)
     await currentPost.save()
+    if (req.body.deleteImages) {
+        for (let filename of req.body.deleteImages) {
+            await cloudinary.uploader.destroy(filename)
+        }
+        await currentPost.updateOne({ $pull: { image: { filename: { $in: req.body.deleteImages } } } })
+    }
     req.flash('success', 'You updated your post')
     res.redirect(`/posts/${id}`)
 }
 
 module.exports.destroy = async (req, res) => {
     const { id } = req.params;
+    const currentPost = await Post.findById(id)
+    if (currentPost.image) {
+        for (let img of currentPost.image) {
+            await cloudinary.uploader.destroy(img.filename)
+        }
+    }
     await User.findByIdAndUpdate(req.user._id, { $pull: { posts: id } }, { useFindAndModify: false })
     await Post.findByIdAndDelete(id)
     req.flash('success', 'Your post has been deleted')

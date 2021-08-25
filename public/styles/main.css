@@ -18,6 +18,10 @@
     color:white
 }
 
+.edit-image-thumbnail{
+    margin-right: 1em;
+}
+
 .darkLG :hover{
     background-color: rgb(39, 38, 38);
     color:white;
@@ -26,6 +30,10 @@
 .lightLG :hover{
     background-color: rgb(248, 248, 248);
     color:grey;
+}
+
+.slide-buttons :hover{
+    background-color: transparent;
 }
 
 @media screen and (min-width: 992px) {
