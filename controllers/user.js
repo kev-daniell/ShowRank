@@ -47,6 +47,6 @@ module.exports.logout = (req, res) => {
 
 module.exports.profile = async (req, res) => {
     const { id } = req.params
-    const currentUser = await User.findById(id)
+    const currentUser = await User.findById(id).populate('posts').populate('comments')
     res.render('profile', { user: currentUser })
 }

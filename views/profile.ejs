@@ -3,36 +3,169 @@
         User: <%= user.username %>
     </h1>
 
-
-
-    <ul class="nav nav-pills mb-3 row justify-content-between" id="pills-tab" role="tablist">
-        <li class="nav-item col-2" role="presentation">
-            <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
-                type="button" role="tab" aria-controls="pills-home" aria-selected="true">Posts</button>
-        </li>
-        <li class="nav-item col-2" role="presentation">
-            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
-                type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Comments</button>
-        </li>
-        <li class="nav-item col-2" role="presentation">
-            <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact"
-                type="button" role="tab" aria-controls="pills-contact" aria-selected="false">About</button>
-        </li>
-    </ul>
-
-
-    <div class="tab-content" id="pills-tabContent">
-        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi deserunt, voluptatem facilis in eligendi eum
-            voluptate veniam porro assumenda. Animi explicabo at eaque, dolorum officiis saepe odit fugit nam tempora?
+    <nav>
+        <div class="nav nav-tabs mb-3 row justify-content-between" id="nav-tab" role="tablist">
+            <button class="nav-link active d-grid gap-2 col-4" id="nav-home-tab" style="color: grey;"
+                data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home"
+                aria-selected="true">Posts</button>
+            <button class="nav-link d-grid gap-2 col-4" id="nav-profile-tab" style="color: grey;" data-bs-toggle="tab"
+                data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile"
+                aria-selected="false">Comments</button>
+            <button class="nav-link d-grid gap-2 col-4" id="nav-contact-tab" style="color: grey;" data-bs-toggle="tab"
+                data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact"
+                aria-selected="false">Profile</button>
         </div>
-        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corporis eos sit molestiae veritatis quae hic
-            ipsam rem doloremque tempora saepe, eum veniam tenetur corrupti? Tempore explicabo itaque pariatur ea omnis.
+    </nav>
+
+    <!-- All User Posts -->
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <% if(user.posts.length===0){ %>
+                <div class="text-center mb-4 text-muted">
+                    <small>No Posts Found</small>
+                </div>
+                <% } %>
+                    <% for(let post of user.posts){ %>
+                        <div class="mt-3 card <%= viewMode ==='light' ? " text-dark bg-light mb-3"
+                            : "text-white bg-dark mb-3" %>">
+                            <div class="card-body">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <p class="card-text">
+                                        User: <a href="">
+                                            <%= user.username %>
+                                        </a>
+                                    </p>
+                                    <small class="text-muted">
+                                        <%= post.postDate %>
+                                    </small>
+                                </div>
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h4 class="card-title">
+                                        <%= post.title %>
+                                    </h4>
+                                </div>
+
+                                <% if(post.image.length> 0){ %>
+                                    <div id="carouselExampleControls" class="carousel slide">
+                                        <div class="carousel-inner">
+                                            <% post.image.forEach((img, i)=> {%>
+                                                <div class="carousel-item <%= i === 0 ? 'active':'' %> "
+                                                    data-bs-interval="10000000000">
+                                                    <img src="<%=img.url%> " class="d-block w-100" alt="">
+                                                </div>
+                                                <% }) %>
+                                        </div>
+                                        <% if(post.image.length> 1){ %>
+                                            <button class="carousel-control-prev" type="button"
+                                                data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Previous</span>
+                                            </button>
+                                            <button class="carousel-control-next" type="button"
+                                                data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Next</span>
+                                            </button>
+                                            <% } %>
+                                    </div>
+                                    <% } %>
+                                        <p class="card-text">
+                                            <%= post.text %>
+                                        </p>
+                                        <a href="/posts" class="btn btn-sm btn-outline-secondary">Back to All
+                                            Posts</a>
+                                        <% if(currentUser && user.equals(currentUser._id)){ %>
+                                            <a class="btn btn-sm btn-outline-secondary"
+                                                href="/posts/<%= post._id %>/edit">Edit</a>
+                                            <% } %>
+                            </div>
+                        </div>
+                        <% } %>
+
         </div>
-        <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam debitis necessitatibus magni exercitationem
-            doloribus pariatur libero recusandae dolores commodi sapiente. Suscipit nulla eaque quos reprehenderit
-            dolore veritatis! Placeat, provident modi.
+
+        <!-- All User Comments  -->
+        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+            <% if(user.comments.length==0){ %>
+                <div class="text-center mb-4 text-muted">
+                    <small>No Comments Found</small>
+                </div>
+                <% } %>
+                    <% for(let comment of user.comments){ %>
+                        <div class="card <%= viewMode ==='light' ? " text-dark bg-light mb-3"
+                            : "text-white bg-dark mb-3" %>">
+                            <div class="card-body">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <p class="card-text text-muted">
+                                        <a href="/#">
+                                            <%= user.username %>
+                                        </a>
+                                    </p>
+                                    <small class="text-muted">
+                                        <%= comment.commentDate %>
+                                    </small>
+                                </div>
+
+                                <p class="card-text">
+                                    <%= comment.text %>
+                                </p>
+                                <div class="d-flex w-100 justify-content-between">
+                                    <small class="text-muted">Likes: <%= comment.likes%></small>
+
+                                    <% if(currentUser && user.equals(currentUser._id)){ %>
+
+                                        <a class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
+                                            data-bs-target="#l<%=comment._id%>">Edit</a>
+
+                                        <!-- modal -->
+                                        <!-- side note: maybe should not be "static", you should be able to click away from it -->
+                                        <div class="modal fade" id="l<%=comment._id%>" tabindex="-1"
+                                            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header <%= viewMode %> ">
+                                                        <h5 class="modal-title" id="staticBackdropLabel">Edit
+                                                            Comment</h5>
+                                                        <button type="button"
+                                                            class="btn-close <%= viewMode == 'dark' ? 'btn-close-white':''%>"
+                                                            data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body <%= viewMode %> ">
+                                                        <form
+                                                            action="/posts/<%=comment.post%>/comment/<%= comment._id %>?_method=PATCH"
+                                                            method="POST">
+                                                            <div class="mb-3">
+                                                                <label class="form-label" for="text">Comment:
+                                                                </label>
+                                                                <textarea class="form-control" name="text" id="text"
+                                                                    cols="5" rows="5"><%=comment.text%> </textarea>
+                                                            </div>
+                                                            <button
+                                                                class="mb-2 btn btn-sm btn-outline-secondary">Update</button>
+                                                        </form>
+                                                        <form
+                                                            action="/posts/<%=comment.post%>/comment/<%= comment._id %>?_method=DELETE"
+                                                            method="POST">
+                                                            <button class="btn btn-sm btn-outline-secondary">Delete
+                                                                comment</button>
+                                                        </form>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% } else{ %>
+                                            <span></span>
+                                            <% } %>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <% } %>
+        </div>
+        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+            3 Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi quisquam laborum cumque cum fugit alias
+            distinctio, aperiam aliquam exercitationem sunt non odio harum libero amet beatae fuga quas, itaque in.
         </div>
     </div>
