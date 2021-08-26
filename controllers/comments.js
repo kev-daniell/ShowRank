@@ -10,7 +10,7 @@ module.exports.makeComment = async (req, res) => {
         return res.redirect(`/posts/${id}`)
     }
     const currentUser = await User.findById(req.user._id)
-    const newComment = new Comment({ text: text })
+    const newComment = new Comment({ text: text, commentDate: req.body.date })
     const currentPost = await Post.findById(id);
     currentPost.comments.push(newComment);
     currentUser.comments.push(newComment);
@@ -31,6 +31,7 @@ module.exports.editComment = async (req, res) => {
         return res.redirect(`/posts/${id}`)
     }
     const currentComment = await Comment.findByIdAndUpdate(commentId, { text }, { runValidators: true })
+    currentComment.commentDate = `${req.body.date} (edited)`
     await currentComment.save()
     req.flash('success', 'Comment was edited')
     res.redirect(`/posts/${id}`)

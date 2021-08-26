@@ -50,15 +50,21 @@
                                     <% } %>
                             </div>
                             <% } %>
-
-                                <p class="mb-1">
-                                    <%= posts[length - i].text %>
-                                </p>
-                                <br>
-                                <section>
-                                    <small class="text-muted">Comments: <%=posts[length-i].comments.length%>
-                                    </small>
-                                </section>
+                                <% if(posts[length-i].text.length < 200){ %>
+                                    <p class="mb-1">
+                                        <%= posts[length-i].text %>
+                                    </p>
+                                    <% } else{ %>
+                                        <p class="mb-1">
+                                            <%= posts[length - i].text.substr(0,150)%><span
+                                                    style="color: rgb(66,139,202);">. . .[read more]</span>
+                                        </p>
+                                        <% } %>
+                                            <br>
+                                            <section>
+                                                <small class="text-muted">Comments: <%=posts[length-i].comments.length%>
+                                                </small>
+                                            </section>
                     </a>
                 </div>
             </div>

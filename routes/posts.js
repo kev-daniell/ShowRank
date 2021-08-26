@@ -16,7 +16,7 @@ router.get('/create', isLoggedIn, post.createForm)
 
 router.route('/:id')
     .get(saveUrl, catchAsync(post.singlePost))
-    .patch(isLoggedIn, isAuthor, upload.array('image'), validatePost, catchAsync(post.patchEdit))
+    .patch(isLoggedIn, isAuthor, upload.array('image'), validatePost, postDate, catchAsync(post.patchEdit))
     .delete(isLoggedIn, isAuthor, catchAsync(post.destroy))
 
 router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(post.editForm))

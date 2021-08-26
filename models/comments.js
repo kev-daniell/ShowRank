@@ -10,6 +10,7 @@ commentSchema = new Schema({
         type: String,
         required: true,
     },
+    commentDate: String,
     likes: {
         type: Number,
         default: 0

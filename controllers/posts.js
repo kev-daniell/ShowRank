@@ -45,7 +45,6 @@ module.exports.postNewPost = async (req, res) => {
         req.flash('error', 'You CANNOT leave the title empty')
         return res.redirect('/posts/create')
     }
-    console.log(req.body.date) //TEST LINEEEE
     postDate = req.body.date
     const author = req.user._id
     const cUser = await User.findById(author)
@@ -60,13 +59,13 @@ module.exports.postNewPost = async (req, res) => {
 
 module.exports.patchEdit = async (req, res) => {
     const { id } = req.params;
-    // console.log(req.body)
     const { title, text } = req.body;
     if (title.trim().length === 0) {
         req.flash('error', 'You CANNOT leave the title empty')
         return res.redirect(`/posts/${id}/edit`)
     }
     const currentPost = await Post.findByIdAndUpdate(id, { title, text }, { runValidators: true })
+    currentPost.postDate = `${req.body.date} (edited)`
     const images = req.files.map(f => ({ url: f.path, filename: f.filename }))
     currentPost.image.push(...images)
     await currentPost.save()

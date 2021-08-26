@@ -4,11 +4,13 @@
             <div class="card-body">
                 <div class="d-flex w-100 justify-content-between">
                     <p class="card-text">
-                        User: <a href="##">
+                        User: <a href="/user/<%=post.author._id%>">
                             <%= post.author.username %>
                         </a>
                     </p>
-                    <small class="text-muted">5 days ago</small>
+                    <small class="text-muted">
+                        <%= post.postDate %>
+                    </small>
                 </div>
                 <div class="d-flex w-100 justify-content-between">
                     <h4 class="card-title">
@@ -93,7 +95,9 @@
                                                     <%= comment.author.username %>
                                                 </a>
                                             </p>
-                                            <small class="text-muted">5 days ago</small>
+                                            <small class="text-muted">
+                                                <%= comment.commentDate %>
+                                            </small>
                                         </div>
 
                                         <p class="card-text">

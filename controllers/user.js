@@ -42,3 +42,11 @@ module.exports.logout = (req, res) => {
     req.flash('success', 'Goodbye!')
     res.redirect('/')
 }
+
+//User profile routes
+
+module.exports.profile = async (req, res) => {
+    const { id } = req.params
+    const currentUser = await User.findById(id)
+    res.render('profile', { user: currentUser })
+}
