@@ -11,13 +11,13 @@ mongoose.connect('mongodb://localhost:27017/showApp', { useNewUrlParser: true, u
 
 const seedPosts = [
     {
-        author: '611e7e1d06dbe77ca1d710b5',
+        author: '612a58ad8310a38e3ca8be67',
         title: 'AMC TO THE MOON',
         text: 'amc and gme r gonna go to the moon, diamond hands only baby',
         postDate: "2021-08-12"
     },
     {
-        author: '611e7e1d06dbe77ca1d710b5',
+        author: '612a58ad8310a38e3ca8be67',
         title: 'What is life',
         text: 'not sure what life is anymore',
         postDate: "2021-08-12",
@@ -27,7 +27,7 @@ const seedPosts = [
         }
     },
     {
-        author: '611e7e1d06dbe77ca1d710b5',
+        author: '612a58ad8310a38e3ca8be67',
         title: 'Mai bad as hell',
         text: 'felt the need to remind everyone that mai is bad as hell',
         postDate: "2021-08-12",
