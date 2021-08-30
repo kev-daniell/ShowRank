@@ -48,5 +48,7 @@ module.exports.logout = (req, res) => {
 module.exports.profile = async (req, res) => {
     const { id } = req.params
     const currentUser = await User.findById(id).populate('posts').populate('comments')
-    res.render('profile', { user: currentUser })
+    const length = currentUser.posts.length - 1;
+    const cLength = currentUser.comments.length - 1;
+    res.render('profile', { user: currentUser, length, cLength })
 }
