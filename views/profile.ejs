@@ -146,6 +146,17 @@
             <div class="mb-3">
                 <p><strong>Account Made: </strong>date</p>
             </div>
-            if user is user then display their email, etc etc
+            <% if(currentUser && user.username===currentUser.username){ %>
+                <div class="mb-3">
+                    <p><strong>Account Email: </strong>
+                        <%= user.email %>
+                    </p>
+                </div>
+                <div class="mb-3">
+                    <p><strong>Current Viewing Mode: </strong>
+                        <%= user.viewMode %>
+                    </p>
+                </div>
+                <% } %>
         </div>
     </div>
