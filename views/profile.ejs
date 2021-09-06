@@ -151,10 +151,11 @@
                         <%= user.email %>
                     </p>
                 </div>
-                <div class="mb-3">
-                    <p><strong>Current Viewing Mode: </strong>
+                <div class="mb-3 d-inline-flex">
+                    <p class="pt-3"><strong>Current Viewing Mode: </strong>
                         <%= user.viewMode %>
                     </p>
+                    <a class="mx-3 btn btn-sm btn-outline-secondary align-self-center" href="/change">Toggle Mode</a>
                 </div>
                 <% } %>
         </div>
