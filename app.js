@@ -20,6 +20,7 @@ const commentRoutes = require('./routes/comments');
 const userRoutes = require('./routes/user')
 const User = require('./models/user')
 
+
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
