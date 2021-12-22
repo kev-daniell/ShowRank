@@ -59,7 +59,7 @@ mongoose.connect('mongodb://localhost:27017/showApp',
     })
 
 const author = "k6daniel";
-var viewMode = 'light'
+var viewMode = 'dark'
 
 //flash middleware
 app.use((req, res, next) => {
