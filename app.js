@@ -72,9 +72,16 @@ app.use((req, res, next) => {
 })
 
 //Routing to home page
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
     delete req.session.returnTo
-    res.render('home')
+    if (req.user) {
+        const currentUser = await User.findById(req.user._id).populate('posts').populate('comments')
+        const length = currentUser.posts.length - 1;
+        const cLength = currentUser.comments.length - 1;
+        res.render('home', { user: currentUser, length, cLength })
+    } else {
+        res.render('entry')
+    }
 })
 
 //TRASH changing system

@@ -1,9 +1,9 @@
-.nav-link{
+.nav-feature{
     color: white;
     border-bottom: 0.25rem solid transparent;
 }
 
-.nav-link:hover{
+.nav-feature:hover{
     color: rgb(216, 208, 208);
     border-bottom: 0.25rem solid white;
 
@@ -34,4 +34,8 @@
     margin-bottom: 5rem;
 }
 
-
+.box{
+    overflow: auto;
+    height: 30rem;
+    width: 35rem;
+}
