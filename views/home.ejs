@@ -42,20 +42,20 @@
                 </div>
             </div>
             <div class="mt-5 mb-5 row">
-                <h4>Your Recent Activity</h4>
+                <h4 class="mb-3">Your Recent Activity</h4>
 
-                <div class="col-md-3 offset-md-3 col-xl-4 offset-xl-4">
+                <div class="container Posts">
 
 
-                    <div class="box d-flex justify-content-center align-item-center mx-auto">
+                    <div class="box mx-auto">
                         <% if(user.posts.length===0){ %>
                             <div class="text-center mb-4 text-muted">
                                 <small>No Reecnt Posts</small>
                             </div>
                             <% } %>
                                 <% for(let i=0; i < user.posts.length; i++){%>
-                                    <div class="mb-3 row">
-                                        <div class="col-12">
+                                    <div class="mb-3 row d-flex justify-content-center align-item-center">
+                                        <div class="col-12 mb-3">
                                             <div class="list-group <%= viewMode ==='dark' ? " darkLG":"lightLG" %> ">
                                                 <a href="/posts/<%= user.posts[length - i]._id %>"
                                                     class="list-group-item list-group-item light <%= viewMode==='light' ? 'list-group-item-light' : 'list-group-item-dark'%>">
@@ -123,15 +123,22 @@
                                                 </a>
                                             </div>
                                         </div>
-
-                                        <% } %>
                                     </div>
+
+                                    <% } %>
                     </div>
                 </div>
             </div>
         </div>
 
+
+
     </body>
 
+    <footer class="footer <%= viewMode ==='dark' ? 'bg-dark': 'bg-light' %> py-3 ">
+        <div class="container text-center">
+            <span class="text-muted">&copy; ShowApp 2021</span>
+        </div>
+    </footer>
 
 </html>
