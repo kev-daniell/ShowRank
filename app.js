@@ -12,6 +12,7 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('passport')
 const localStrat = require('passport-local')
+const MongoSanitize = require('express-mongo-sanitize');
 
 
 const AppError = require('./utilities/AppError');
@@ -42,6 +43,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(flash());
+app.use(MongoSanitize());
 
 app.use(passport.initialize())
 app.use(passport.session())
@@ -63,6 +65,7 @@ var viewMode = 'dark'
 
 //flash middleware
 app.use((req, res, next) => {
+    console.log(req.query)
     if (!req.user) res.locals.viewMode = viewMode
     else res.locals.viewMode = req.user.viewMode
     res.locals.currentUser = req.user
