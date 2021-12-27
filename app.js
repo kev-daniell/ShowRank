@@ -65,7 +65,6 @@ var viewMode = 'dark'
 
 //flash middleware
 app.use((req, res, next) => {
-    console.log(req.query)
     if (!req.user) res.locals.viewMode = viewMode
     else res.locals.viewMode = req.user.viewMode
     res.locals.currentUser = req.user
