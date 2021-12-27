@@ -1,8 +1,9 @@
 const Post = require("./models/posts")
-const mongoose = require('mongoose')
 const Comment = require('./models/comments')
 const Joi = require('joi')
 const AppError = require('./utilities/AppError')
+const { postSchema, commentSchema } = require('./schemas.js')
+
 
 module.exports.isLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
@@ -45,8 +46,7 @@ module.exports.isCommentAuthor = async (req, res, next) => {
 
 //Error checking middleware using JOI, every post needs a title to be created
 module.exports.validatePost = (req, res, next) => {
-    const postSchema = Joi.string().required()
-    const { error } = postSchema.validate(req.body.title)
+    const { error } = postSchema.validate(req.body)
     if (error) {
         const msg = error.details.map(el => el.message).join(',')
         throw new AppError(`A Title is required for a Post, ${msg}`, 400)
@@ -55,8 +55,7 @@ module.exports.validatePost = (req, res, next) => {
 }
 
 module.exports.validateComment = (req, res, next) => {
-    const commentSchema = Joi.string().required()
-    const { error } = commentSchema.validate(req.body.text)
+    const { error } = commentSchema.validate(req.body)
     if (error) {
         const msg = error.details.map(el => el.message).join(',')
         throw new AppError(`Text is required to make a comment, ${msg}`, 400)
