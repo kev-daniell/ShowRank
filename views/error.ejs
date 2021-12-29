@@ -13,7 +13,9 @@
         <p class="mb-0">
             <%= err.message %>
         </p>
-        <p>
-            <%= err.stack %>
-        </p>
+        <% if (process.env.NODE_ENV!=='production' ) { %>
+            <p>
+                <%= err.stack %>
+            </p>
+            <% } %>
     </div>

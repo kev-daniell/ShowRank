@@ -28,6 +28,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.engine('ejs', ejsMate);
 
 const sessionConfig = {
+    name: 'session',
     secret: 'thisisabadsecret',
     resave: false,
     saveUninitialized: true,
