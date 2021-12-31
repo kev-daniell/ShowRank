@@ -8,7 +8,7 @@ const { postSchema, commentSchema } = require('./schemas.js')
 module.exports.isLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
         req.session.returnTo = req.originalUrl
-        req.flash('error', 'You must be signed in')
+        req.flash('ERROR', 'You must be signed in')
         res.redirect('/login')
     } else next()
 }
@@ -28,7 +28,7 @@ module.exports.isAuthor = async (req, res, next) => {
         next()
     }
     else {
-        req.flash('error', 'You do not have permission to do that')
+        req.flash('ERROR', 'You do not have permission to do that')
         res.redirect(`/posts/${id}`)
     }
 }
@@ -39,17 +39,20 @@ module.exports.isCommentAuthor = async (req, res, next) => {
     if (req.user._id && currentComment.author.equals(req.user._id)) {
         next();
     } else {
-        req.flash('error', 'You do not have permission to do that')
+        req.flash('ERROR', 'You do not have permission to do that')
         res.redirect(`/posts/${id}`)
     }
 }
 
 //Error checking middleware using JOI, every post needs a title to be created
 module.exports.validatePost = (req, res, next) => {
+    if (!req.body.text) {
+        req.body.text = " "
+    }
     const { error } = postSchema.validate(req.body)
     if (error) {
         const msg = error.details.map(el => el.message).join(',')
-        throw new AppError(`A Title is required for a Post, ${msg}`, 400)
+        throw new AppError(`ERROR, ${msg}`, 400)
     }
     else next()
 }

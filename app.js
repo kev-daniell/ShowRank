@@ -15,7 +15,7 @@ const localStrat = require('passport-local')
 const MongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet')
 
-//const MongoStore = require("connect-mongo")(session);
+// const MongoStore = require("connect-mongo")(session);
 
 const AppError = require('./utilities/AppError');
 const postRoutes = require('./routes/posts');
@@ -23,8 +23,8 @@ const commentRoutes = require('./routes/comments');
 const userRoutes = require('./routes/user')
 const User = require('./models/user')
 
-const dbURL = process.env.DB_URL
-// const dbURL = 'mongodb://localhost:27017/showApp'
+// const dbURL = process.env.DB_URL
+const dbURL = 'mongodb://localhost:27017/showApp'
 
 mongoose.connect(dbURL,
     {
@@ -33,9 +33,9 @@ mongoose.connect(dbURL,
         useFindAndModify: false,
         useCreateIndex: true,
         autoIndex: false, // Don't build indexes
-        maxPoolSize: 10, // Maintain up to 10 socket connections
-        serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5 seconds
-        socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
+        //maxPoolSize: 10, // Maintain up to 10 socket connections
+        //serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5 seconds
+        ///socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
         family: 4 // Use IPv4, skip trying IPv6
     })
     .then(() => {
@@ -63,7 +63,7 @@ app.engine('ejs', ejsMate);
 
 
 const sessionConfig = {
-    //store,
+    // store,
     name: 'session',
     secret: 'thisisabadsecret',
     resave: false,
