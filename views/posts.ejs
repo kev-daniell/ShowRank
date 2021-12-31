@@ -4,6 +4,15 @@
         <br>
         <a href="/posts/create" class="btn btn-outline-secondary">+ Create a Post</a>
         <hr>
+        <div class="mt-3">
+            <% if(posts.length===0){ %>
+                <div class="text-center mb-4 text-muted">
+                    <small>Seems like a desert here, be the first to post!</small>
+                </div>
+                <% } %>
+        </div>
+
+
         <% for(let i=0; i < posts.length; i++){%>
             <div class="mb-3">
                 <div class="list-group <%= viewMode ==='dark' ? " darkLG":"lightLG" %> ">
@@ -62,7 +71,8 @@
                                         <% } %>
                                             <br>
                                             <section>
-                                                <small class="text-muted">Comments: <%=posts[length-i].comments.length%>
+                                                <small class="text-muted">Comments:
+                                                    <%=posts[length-i].comments.length%>
                                                 </small>
                                             </section>
                     </a>

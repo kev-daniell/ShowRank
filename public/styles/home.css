@@ -39,3 +39,13 @@
     height: 30rem;
     width: 38rem;
 }
+
+
+@media screen and (max-width: 850px) {
+    .box{
+        width: 20rem;
+        height: 21rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

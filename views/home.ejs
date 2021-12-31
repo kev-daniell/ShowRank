@@ -44,88 +44,94 @@
             <div class="mt-5 mb-5 row">
                 <h4 class="mb-3">Your Recent Activity</h4>
 
-                <div class="container Posts">
+                <div class="container">
 
 
                     <div class="box mx-auto">
-                        <% if(user.posts.length===0){ %>
-                            <div class="text-center mb-4 text-muted">
-                                <small>No Reecnt Posts</small>
-                            </div>
-                            <% } %>
-                                <% for(let i=0; i < user.posts.length; i++){%>
-                                    <div class="mb-3 row d-flex justify-content-center align-item-center">
-                                        <div class="col-12 mb-3">
-                                            <div class="list-group <%= viewMode ==='dark' ? " darkLG":"lightLG" %> ">
-                                                <a href="/posts/<%= user.posts[length - i]._id %>"
-                                                    class="list-group-item list-group-item light <%= viewMode==='light' ? 'list-group-item-light' : 'list-group-item-dark'%>">
+                        <div class="">
+                            <% if(user.posts.length===0){ %>
+                                <div class="text-center mb-4 text-muted">
+                                    <small>No Recent Posts</small>
+                                </div>
+                                <% } %>
+                                    <% for(let i=0; i < user.posts.length; i++){%>
+                                        <div class="mb-3 row d-flex justify-content-center align-item-center">
+                                            <div class="col-12 mb-3">
+                                                <div class="list-group <%= viewMode ==='dark' ? " darkLG":"lightLG" %>
+                                                    ">
+                                                    <a href="/posts/<%= user.posts[length - i]._id %>"
+                                                        class="list-group-item list-group-item light <%= viewMode==='light' ? 'list-group-item-light' : 'list-group-item-dark'%>">
 
-                                                    <div class="d-flex w-100 justify-content-between">
-                                                        <p class="card-text">
-                                                            <%= user.posts[length - i].author.username%>
-                                                        </p>
-                                                        <small class="text-muted">
-                                                            <%= user.posts[length -i].postDate %>
-                                                        </small>
-                                                    </div>
-
-                                                    <div class="d-flex w-100 justify-content-between">
-                                                        <h5 class="mb-1">
-                                                            <%= user.posts[length - i].title%>
-                                                        </h5>
-                                                    </div>
-
-                                                    <% if(user.posts[length - i].image.length> 0){ %>
-                                                        <div id="id-<%=user.posts[length-i]._id%>"
-                                                            class="carousel slide slide-buttons">
-                                                            <div class="carousel-inner">
-                                                                <% user.posts[length - i].image.forEach((img, i)=> {%>
-                                                                    <div class="carousel-item <%= i === 0 ? 'active':'' %>"
-                                                                        data-bs-interval="10000000000">
-                                                                        <img src="<%=img.url%>" class="d-block w-100"
-                                                                            alt="">
-                                                                    </div>
-                                                                    <% }) %>
-                                                            </div>
-                                                            <% if(user.posts[length - i].image.length> 1){ %>
-                                                                <button class="carousel-control-prev slide-buttons"
-                                                                    type="button"
-                                                                    data-bs-target="#id-<%=user.posts[length-i]._id%>"
-                                                                    data-bs-slide="prev">
-                                                                    <span class="carousel-control-prev-icon"
-                                                                        aria-hidden="true"></span>
-                                                                    <span class="visually-hidden">Previous</span>
-                                                                </button>
-                                                                <button class="carousel-control-next slide-buttons"
-                                                                    type="button"
-                                                                    data-bs-target="#id-<%=user.posts[length-i]._id%>"
-                                                                    data-bs-slide="next">
-                                                                    <span class="carousel-control-next-icon"
-                                                                        aria-hidden="true"></span>
-                                                                    <span class="visually-hidden">Next</span>
-                                                                </button>
-                                                                <% } %>
+                                                        <div class="d-flex w-100 justify-content-between">
+                                                            <p class="card-text">
+                                                                <%= user.posts[length - i].author.username%>
+                                                            </p>
+                                                            <small class="text-muted">
+                                                                <%= user.posts[length -i].postDate %>
+                                                            </small>
                                                         </div>
-                                                        <% } %>
-                                                            <% if(user.posts[length-i].text.length < 200){ %>
-                                                                <p class="mb-1">
-                                                                    <%= user.posts[length-i].text %>
-                                                                </p>
-                                                                <% } else{ %>
-                                                                    <p class="mb-1">
-                                                                        <%= user.posts[length - i].text.substr(0,150)%>
-                                                                            <span style="color: rgb(66,139,202);">. .
-                                                                                .[read
-                                                                                more]</span>
-                                                                    </p>
-                                                                    <% } %>
 
-                                                </a>
+                                                        <div class="d-flex w-100 justify-content-between">
+                                                            <h5 class="mb-1">
+                                                                <%= user.posts[length - i].title%>
+                                                            </h5>
+                                                        </div>
+
+                                                        <% if(user.posts[length - i].image.length> 0){ %>
+                                                            <div id="id-<%=user.posts[length-i]._id%>"
+                                                                class="carousel slide slide-buttons">
+                                                                <div class="carousel-inner">
+                                                                    <% user.posts[length - i].image.forEach((img, i)=>
+                                                                        {%>
+                                                                        <div class="carousel-item <%= i === 0 ? 'active':'' %>"
+                                                                            data-bs-interval="10000000000">
+                                                                            <img src="<%=img.url%>"
+                                                                                class="d-block w-100" alt="">
+                                                                        </div>
+                                                                        <% }) %>
+                                                                </div>
+                                                                <% if(user.posts[length - i].image.length> 1){ %>
+                                                                    <button class="carousel-control-prev slide-buttons"
+                                                                        type="button"
+                                                                        data-bs-target="#id-<%=user.posts[length-i]._id%>"
+                                                                        data-bs-slide="prev">
+                                                                        <span class="carousel-control-prev-icon"
+                                                                            aria-hidden="true"></span>
+                                                                        <span class="visually-hidden">Previous</span>
+                                                                    </button>
+                                                                    <button class="carousel-control-next slide-buttons"
+                                                                        type="button"
+                                                                        data-bs-target="#id-<%=user.posts[length-i]._id%>"
+                                                                        data-bs-slide="next">
+                                                                        <span class="carousel-control-next-icon"
+                                                                            aria-hidden="true"></span>
+                                                                        <span class="visually-hidden">Next</span>
+                                                                    </button>
+                                                                    <% } %>
+                                                            </div>
+                                                            <% } %>
+                                                                <% if(user.posts[length-i].text.length < 200){ %>
+                                                                    <p class="mb-1">
+                                                                        <%= user.posts[length-i].text %>
+                                                                    </p>
+                                                                    <% } else{ %>
+                                                                        <p class="mb-1">
+                                                                            <%= user.posts[length -
+                                                                                i].text.substr(0,150)%>
+                                                                                <span style="color: rgb(66,139,202);">.
+                                                                                    .
+                                                                                    .[read
+                                                                                    more]</span>
+                                                                        </p>
+                                                                        <% } %>
+
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <% } %>
+                                        <% } %>
+                        </div>
                     </div>
                 </div>
             </div>

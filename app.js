@@ -15,11 +15,35 @@ const localStrat = require('passport-local')
 const MongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet')
 
+//const MongoStore = require("connect-mongo")(session);
+
 const AppError = require('./utilities/AppError');
 const postRoutes = require('./routes/posts');
 const commentRoutes = require('./routes/comments');
 const userRoutes = require('./routes/user')
 const User = require('./models/user')
+
+const dbURL = process.env.DB_URL
+// const dbURL = 'mongodb://localhost:27017/showApp'
+
+mongoose.connect(dbURL,
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useFindAndModify: false,
+        useCreateIndex: true,
+        autoIndex: false, // Don't build indexes
+        maxPoolSize: 10, // Maintain up to 10 socket connections
+        serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5 seconds
+        socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
+        family: 4 // Use IPv4, skip trying IPv6
+    })
+    .then(() => {
+        console.log('connection open')
+    })
+    .catch(e => {
+        console.log('ERROR OCCURED', e)
+    })
 
 
 app.set('view engine', 'ejs');
@@ -27,7 +51,19 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.engine('ejs', ejsMate);
 
+// const store = new MongoStore({
+//     url: dbURL,
+//     secret: 'thisisabadsecret',
+//     touchAfter: 24 * 60 * 60
+// });
+
+// store.on("error", function (e) {
+//     console.log("SESSION STORE ERROR", e)
+// })
+
+
 const sessionConfig = {
+    //store,
     name: 'session',
     secret: 'thisisabadsecret',
     resave: false,
@@ -36,7 +72,7 @@ const sessionConfig = {
         httpOnly: true,
         expires: Date.now() + 1000 * 60 * 60 * 24 * 30,
         maxAge: 1000 * 60 * 60 * 24 * 30,
-    }
+    },
 }
 app.use(session(sessionConfig))
 
@@ -100,14 +136,6 @@ passport.use(new localStrat(User.authenticate()))
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-mongoose.connect('mongodb://localhost:27017/showApp',
-    { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
-    .then(() => {
-        console.log('connection open')
-    })
-    .catch(e => {
-        console.log('ERROR OCCURED', e)
-    })
 
 const author = "k6daniel";
 var viewMode = 'dark'
