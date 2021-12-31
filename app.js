@@ -15,7 +15,7 @@ const localStrat = require('passport-local')
 const MongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet')
 
-// const MongoStore = require("connect-mongo")(session);
+const MongoStore = require("connect-mongo")(session);
 
 const AppError = require('./utilities/AppError');
 const postRoutes = require('./routes/posts');
@@ -23,8 +23,9 @@ const commentRoutes = require('./routes/comments');
 const userRoutes = require('./routes/user')
 const User = require('./models/user')
 
-// const dbURL = process.env.DB_URL
-const dbURL = 'mongodb://localhost:27017/showApp'
+const dbURL = process.env.DB_URL
+// const dbURL = 'mongodb://localhost:27017/showApp'
+const secret = process.env.SECRET
 
 mongoose.connect(dbURL,
     {
@@ -51,21 +52,21 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.engine('ejs', ejsMate);
 
-// const store = new MongoStore({
-//     url: dbURL,
-//     secret: 'thisisabadsecret',
-//     touchAfter: 24 * 60 * 60
-// });
+const store = new MongoStore({
+    url: dbURL,
+    secret: secret,
+    touchAfter: 24 * 60 * 60
+});
 
-// store.on("error", function (e) {
-//     console.log("SESSION STORE ERROR", e)
-// })
+store.on("error", function (e) {
+    console.log("SESSION STORE ERROR", e)
+})
 
 
 const sessionConfig = {
-    // store,
+    store,
     name: 'session',
-    secret: 'thisisabadsecret',
+    secret: secret,
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -199,6 +200,8 @@ app.use((err, req, res, next) => {
     res.status(err.status).render('error', { err, viewMode })
 })
 
-app.listen(3000, () => {
-    console.log('Serving on port 3000')
+const port = process.env.PORT
+
+app.listen(port, () => {
+    console.log(`Serving on port ${port}`)
 })
