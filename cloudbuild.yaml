@@ -1,8 +1,8 @@
 steps:
   - name: "gcr.io/cloud-builders/docker"
-    args: ["build", "-t", "gcr.io/show-app-cicd/show-app:$SHORT_SHA", "."]
+    args: ["build", "-t", "gcr.io/showapp-372718/show-app:$SHORT_SHA", "."]
   - name: "gcr.io/cloud-builders/docker"
-    args: ["push", "gcr.io/show-app-cicd/show-app:$SHORT_SHA"]
+    args: ["push", "gcr.io/showapp-372718/show-app:$SHORT_SHA"]
   - name: "gcr.io/cloud-builders/gcloud"
     args:
       [
@@ -10,6 +10,6 @@ steps:
         "run",
         "deploy",
         "show-app",
-        "--image=gcr.io/show-app-cicd/show-app:$SHORT_SHA",
+        "--image=gcr.io/showapp-372718/show-app:$SHORT_SHA",
         "--region=us-central1",
       ]
